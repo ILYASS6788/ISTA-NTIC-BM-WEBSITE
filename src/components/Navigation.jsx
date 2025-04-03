@@ -28,7 +28,7 @@ export default function Navigation() {
           </span>
         </NavLink>
         <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse w-48">
-        <NavLink to={loginNav.path} className="animated-button">
+        <NavLink to={loginNav.path} className="animated-button abril-fatface-regular">
           <span className="text">{loginNav.label}</span>
           <span className="circle"></span>
           <loginNav.icon viewBox="0 0 24 24" className="arr-2" />
