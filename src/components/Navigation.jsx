@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { LogIn, Calendar, Book, Clock, Settings, Menu } from 'lucide-react';
+import { Settings, Calendar, Book, Clock, UserRound, Menu } from 'lucide-react';
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,7 +14,7 @@ export default function Navigation() {
     { path: '/schedule', label: 'Schedule', icon: Clock },
     ...(isAdmin ? [{ path: '/dashboard', label: 'Admin Dashboard', icon: Settings }] : []),
   ];
-  const loginNav = { path: '/login', label: 'Login', icon: LogIn };
+  const loginNav = { path: '/login', label: 'Login', icon: UserRound };
 
   return (
     <nav className="bg-white dark:bg-gray-900 w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
@@ -27,18 +27,12 @@ export default function Navigation() {
             <span className='text-blue-600'>M</span>
           </span>
         </NavLink>
-        <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-        <NavLink
-              key={loginNav.path}
-              to={loginNav.path}
-              className={({ isActive }) =>
-                isActive ? 'm-0 flex items-center justify-center space-x-1 px-3 py-2 rounded-md text-sm font-medium bg-[#233340] text-[#6abdfc]'
-                  : 'm-0 flex items-center justify-center space-x-1 px-3 py-2 rounded-md text-sm font-medium hover:bg-blue-600 text-white'
-              }
-            >
-              <loginNav.icon className="h-4 w-4" />
-              <span>{loginNav.label}</span>
-            </NavLink>
+        <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse w-48">
+        <NavLink to={loginNav.path} className="animated-button">
+          <span className="text">{loginNav.label}</span>
+          <span className="circle"></span>
+          <loginNav.icon viewBox="0 0 24 24" className="arr-2" />
+        </NavLink>
           <button onClick={() => setIsOpen(!isOpen)} className="inline-flex items-center p-2 ms-4 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
             <Menu className="w-5 h-5" />
           </button>
