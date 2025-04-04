@@ -6,7 +6,7 @@
     font-style: normal;
     letter-spacing: 3px;
   }
-  
+/*--------------------------------------- LOGIN BUTTON STYLE -------------------------------------*/
 .animated-button {
     position: relative;
     display: flex;
@@ -62,7 +62,7 @@
     color: #ffffff;
     border-radius: 12px;
   }
-  
+
   
   .animated-button:hover .arr-2 {
     left: 28px;
@@ -84,4 +84,5 @@
     height: 220px;
     opacity: 1;
   }
+  /*----------------------------------------------------------------------------*/
   
