@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { GraduationCap, Mail, Lock, Eye, EyeOff } from "lucide-react";
-import { FaGoogle, FaMicrosoft } from "react-icons/fa";
 
 function App() {
   const [showPassword, setShowPassword] = useState(false);
@@ -166,11 +165,9 @@ function App() {
             {isRegistering && (
               <div className="flex justify-center space-x-4 mt-6">
                 <button className="flex items-center space-x-2 px-4 py-2 bg-red-500 text-white rounded-lg">
-                  {/* <FaGoogle className="h-5 w-5" /> */}
                   <span>Register with Google</span>
                 </button>
                 <button className="flex items-center space-x-2 px-4 py-2 bg-blue-500 text-white rounded-lg">
-                  {/* <FaMicrosoft className="h-5 w-5" /> */}
                   <span>Register with Microsoft</span>
                 </button>
               </div>
