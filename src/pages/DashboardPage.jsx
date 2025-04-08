@@ -27,12 +27,11 @@ export default function DashboardPage() {
       <div className="flex">
         {/* Sidebar */}
         <div className="w-64 bg-blue-800 min-h-screen p-4">
-          <div className="flex items-center space-x-2 text-white mb-8">
+          <div className="flex items-center max-[850px]:flex-col space-x-2 text-white mb-4 border-b-2 border-amber-50">
             <Settings className="h-6 w-6" />
-            <span className="text-lg font-semibold">Admin Dashboard</span>
+            <span className="max-[850px]:hidden text-lg font-semibold">Admin Dashboard</span>
           </div>
-          
-          <nav className="space-y-2">
+          <nav className="space-y-2 flex justify-center items-center flex-col">
             <button
               onClick={() => setActiveTab('events')}
               className={`w-full flex items-center space-x-2 px-4 py-2 rounded-lg ${
@@ -40,7 +39,7 @@ export default function DashboardPage() {
               }`}
             >
               <Calendar className="h-5 w-5" />
-              <span>Events</span>
+              <span className='max-[850px]:hidden'>Events</span>
             </button>
             <button
               onClick={() => setActiveTab('schedule')}
@@ -49,7 +48,7 @@ export default function DashboardPage() {
               }`}
             >
               <Clock className="h-5 w-5" />
-              <span>Schedule</span>
+              <span className='max-[850px]:hidden'>Schedule</span>
             </button>
             <button
               onClick={() => setActiveTab('lessons')}
@@ -58,7 +57,7 @@ export default function DashboardPage() {
               }`}
             >
               <BookOpen className="h-5 w-5" />
-              <span>Lessons</span>
+              <span className='max-[850px]:hidden'>Lessons</span>
             </button>
             <button
               onClick={() => setActiveTab('users')}
@@ -67,7 +66,7 @@ export default function DashboardPage() {
               }`}
             >
               <Users className="h-5 w-5" />
-              <span>Users</span>
+              <span className='max-[850px]:hidden'>Users</span>
             </button>
           </nav>
         </div>
@@ -83,7 +82,7 @@ export default function DashboardPage() {
               className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 flex items-center space-x-2"
             >
               <Plus className="h-5 w-5" />
-              <span>Add New {activeTab.slice(0, -1)}</span>
+              <span className='max-[850px]:hidden'>Add New {activeTab.slice(0, -1)}</span>
             </button>
           </div>
 
