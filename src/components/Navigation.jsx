@@ -5,7 +5,7 @@ import { Settings, Calendar, Book, Clock, UserRound, Menu } from 'lucide-react';
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
 
-  const isAdmin = false;
+  const isAdmin = true;
 
   const navItems = [
     { path: '/', label: 'Home', icon: Calendar },
