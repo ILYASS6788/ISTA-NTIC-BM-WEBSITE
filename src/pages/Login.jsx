@@ -20,7 +20,7 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col items-center p-2">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex  items-center  justify-center">
       {/* Main Container */}
       <div className="w-full max-w-7xl bg-white py-4 px-8 rounded-2xl shadow-xl flex flex-col md:flex-row gap-8 md:gap-16">
         {/* Left Side - Form */}
