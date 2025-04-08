@@ -1,11 +1,11 @@
 @import "tailwindcss";
-/*font style*/
+/* Font style */
 .prompt-medium {
   font-family: "Prompt", sans-serif;
   font-weight: 500;
   font-style: normal;
 }
-/*--------------------------------------- LOGIN BUTTON STYLE -------------------------------------*/
+/* --------------------------------------- LOGIN BUTTON STYLE ------------------------------------- */
 .animated-button {
     position: relative;
     display: flex;
@@ -84,5 +84,4 @@
     height: 220px;
     opacity: 1;
   }
-  /*----------------------------------------------------------------------------*/
-  
+  /* ---------------------------------------------------------------------------- */
