@@ -1,4 +1,5 @@
 import EventCarousel from '../components/EventCarousel';
+import Features from '../components/Features';
 
 const mockEvents = [
   {
@@ -32,52 +33,8 @@ export default function HomePage() {
           <EventCarousel events={mockEvents} />
         </section>
 
-        <section className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-          <div className="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow">
-            <h2 className="text-2xl font-semibold text-blue-800 mb-4">For Students</h2>
-            <ul className="space-y-3">
-              <li className="flex items-center text-gray-700">
-                • Access course materials
-              </li>
-              <li className="flex items-center text-gray-700">
-                • View class schedules
-              </li>
-              <li className="flex items-center text-gray-700">
-                • Register for events
-              </li>
-            </ul>
-          </div>
-
-          <div className="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow">
-            <h2 className="text-2xl font-semibold text-blue-800 mb-4">For Staff</h2>
-            <ul className="space-y-3">
-              <li className="flex items-center text-gray-700">
-                • Manage courses
-              </li>
-              <li className="flex items-center text-gray-700">
-                • Schedule classes
-              </li>
-              <li className="flex items-center text-gray-700">
-                • Organize events
-              </li>
-            </ul>
-          </div>
-
-          <div className="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow">
-            <h2 className="text-2xl font-semibold text-blue-800 mb-4">Quick Links</h2>
-            <ul className="space-y-3">
-              <li className="flex items-center text-gray-700">
-                • Academic Calendar
-              </li>
-              <li className="flex items-center text-gray-700">
-                • Student Resources
-              </li>
-              <li className="flex items-center text-gray-700">
-                • Contact Support
-              </li>
-            </ul>
-          </div>
-        </section>
+        
+          <Features />
 
         <section className="bg-blue-700 text-white rounded-xl p-8 text-center">
           <h2 className="text-3xl font-bold mb-4">Ready to Start Learning?</h2>

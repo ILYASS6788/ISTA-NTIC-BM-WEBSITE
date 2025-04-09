@@ -164,10 +164,12 @@ function App() {
             {/* Social Register Buttons */}
             {isRegistering && (
               <div className="flex justify-center space-x-4 mt-6">
-                <button className="flex items-center space-x-2 px-4 py-2 bg-red-500 text-white rounded-lg">
+                <button className="flex items-center space-x-2 px-4 py-2 rounded-lg border-t-gray-500 shadow-2xl shadow-gray-300 cursor-pointer hover:bg-gray-200">
+                  <img src="/google-icon.svg" alt="Google icon" />
                   <span>Register with Google</span>
                 </button>
-                <button className="flex items-center space-x-2 px-4 py-2 bg-blue-500 text-white rounded-lg">
+                <button className="flex items-center space-x-2 px-4 py-2 rounded-lg border-t-gray-500 shadow-2xl shadow-gray-300 cursor-pointer hover:bg-gray-200">
+                  <img src="/microsoft-icon.svg" alt="Micosoft icon" />
                   <span>Register with Microsoft</span>
                 </button>
               </div>

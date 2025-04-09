@@ -85,3 +85,10 @@
     opacity: 1;
   }
   /* ---------------------------------------------------------------------------- */
+  .contact
+  {
+    background-image: url('../public/contact-bg.svg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  }

@@ -38,12 +38,8 @@ export default function EventsPage() {
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center mb-8">
+        <div className="mb-8">
           <h1 className="text-3xl font-bold text-blue-900">Upcoming Events</h1>
-          <button className="bg-blue-700 text-white px-4 py-2 rounded-lg hover:bg-blue-800 transition-colors flex items-center">
-            <Plus className="h-5 w-5 mr-2" />
-            Add Event
-          </button>
         </div>
 
         <div className="mb-6">
