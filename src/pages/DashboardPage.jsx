@@ -1,5 +1,7 @@
 import { useState } from 'react';
-import { Users, Calendar, BookOpen, Clock, Settings, ChevronDown, Plus, Edit, Trash2 } from 'lucide-react';
+import {Plus, Edit, Trash2 } from 'lucide-react';
+import SidebarDashboard from '../components/SidebarDashboard';
+import UsersTable from './Dashboard Components/UsersTable';
 
 const mockEvents = [
   {
@@ -26,53 +28,10 @@ export default function DashboardPage() {
     <div className="min-h-screen bg-gray-50">
       <div className="flex">
         {/* Sidebar */}
-        <div className="w-64 bg-blue-800 min-h-screen p-4">
-          <div className="flex items-center max-[850px]:flex-col space-x-2 text-white mb-4 border-b-2 border-amber-50">
-            <Settings className="h-6 w-6" />
-            <span className="max-[850px]:hidden text-lg font-semibold">Admin Dashboard</span>
-          </div>
-          <nav className="space-y-2 flex justify-center items-center flex-col">
-            <button
-              onClick={() => setActiveTab('events')}
-              className={`w-full flex items-center space-x-2 px-4 py-2 rounded-lg ${
-                activeTab === 'events' ? 'bg-blue-700 text-white' : 'text-blue-100 hover:bg-blue-700'
-              }`}
-            >
-              <Calendar className="h-5 w-5" />
-              <span className='max-[850px]:hidden'>Events</span>
-            </button>
-            <button
-              onClick={() => setActiveTab('schedule')}
-              className={`w-full flex items-center space-x-2 px-4 py-2 rounded-lg ${
-                activeTab === 'schedule' ? 'bg-blue-700 text-white' : 'text-blue-100 hover:bg-blue-700'
-              }`}
-            >
-              <Clock className="h-5 w-5" />
-              <span className='max-[850px]:hidden'>Schedule</span>
-            </button>
-            <button
-              onClick={() => setActiveTab('lessons')}
-              className={`w-full flex items-center space-x-2 px-4 py-2 rounded-lg ${
-                activeTab === 'lessons' ? 'bg-blue-700 text-white' : 'text-blue-100 hover:bg-blue-700'
-              }`}
-            >
-              <BookOpen className="h-5 w-5" />
-              <span className='max-[850px]:hidden'>Lessons</span>
-            </button>
-            <button
-              onClick={() => setActiveTab('users')}
-              className={`w-full flex items-center space-x-2 px-4 py-2 rounded-lg ${
-                activeTab === 'users' ? 'bg-blue-700 text-white' : 'text-blue-100 hover:bg-blue-700'
-              }`}
-            >
-              <Users className="h-5 w-5" />
-              <span className='max-[850px]:hidden'>Users</span>
-            </button>
-          </nav>
-        </div>
+        <SidebarDashboard setActiveTab={setActiveTab} activeTab={activeTab} />
 
         {/* Main Content */}
-        <div className="flex-1 p-8">
+        <div className="flex-1 p-8 flex-grow">
           <div className="mb-8 flex justify-between items-center">
             <h1 className="text-2xl font-bold text-gray-900">
               {activeTab.charAt(0).toUpperCase() + activeTab.slice(1)} Management
@@ -196,57 +155,7 @@ export default function DashboardPage() {
 
           {/* Users Management */}
           {activeTab === 'users' && (
-            <div className="bg-white rounded-lg shadow">
-              <div className="px-4 py-3 border-b">
-                <select className="rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                  <option>All Roles</option>
-                  <option>Students</option>
-                  <option>Instructors</option>
-                  <option>Administrators</option>
-                </select>
-              </div>
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Name
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Email
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Role
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Actions
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  <tr>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-medium text-gray-900">John Doe</div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      john@example.com
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                        Student
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                      <button className="text-blue-600 hover:text-blue-900 mr-4">
-                        <Edit className="h-5 w-5" />
-                      </button>
-                      <button className="text-red-600 hover:text-red-900">
-                        <Trash2 className="h-5 w-5" />
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+           <UsersTable />
           )}
         </div>
       </div>

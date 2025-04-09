@@ -1,20 +1,41 @@
-import { useState } from 'react';
+import { useState , useRef, useEffect} from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 export default function EventCarousel({ events }) {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const intervalRef = useRef(null);
 
+  useEffect(() => {
+    startAutoSlide();
+    return () => stopAutoSlide(); 
+  }, [currentIndex]);
+
+  const startAutoSlide = () => {
+    stopAutoSlide(); 
+    intervalRef.current = setInterval(() => {
+      setCurrentIndex((prevIndex) =>
+        prevIndex === events.length - 1 ? 0 : prevIndex + 1
+      );
+    }, 5000); 
+  };
+
+  const stopAutoSlide = () => {
+    if (intervalRef.current) clearInterval(intervalRef.current);
+  };
   const nextSlide = () => {
     setCurrentIndex((prevIndex) => 
       prevIndex === events.length - 1 ? 0 : prevIndex + 1
     );
+    startAutoSlide();
   };
 
   const prevSlide = () => {
     setCurrentIndex((prevIndex) => 
       prevIndex === 0 ? events.length - 1 : prevIndex - 1
     );
+    startAutoSlide();
   };
+
 
   return (
     <div className="relative w-full h-[85svh] overflow-hidden rounded-xl">

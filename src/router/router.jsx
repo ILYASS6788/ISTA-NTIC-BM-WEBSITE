@@ -10,6 +10,7 @@ import LessonsPage from "../pages/LessonsPage";
 import DashboardPage from "../pages/DashboardPage";
 import App from "../App";
 import Login from "../pages/Login";
+import Contact from "../pages/Contact";
 
 // TODO: Replace with actual auth check
 const isAdmin = true; // Temporarily set to true for testing
@@ -32,8 +33,12 @@ const router = createBrowserRouter([
         element: <EventsPage />,
       },
       {
-        path: "/lessons",
+        path: "/courses",
         element: <LessonsPage />,
+      },
+      {
+        path: "/contact-nous",
+        element: <Contact />,
       },
       {
         path: "/dashboard",

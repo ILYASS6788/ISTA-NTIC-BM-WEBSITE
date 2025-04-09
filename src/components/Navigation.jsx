@@ -10,7 +10,7 @@ export default function Navigation() {
   const navItems = [
     { path: '/', label: 'Home', icon: Calendar },
     { path: '/events', label: 'Events', icon: Calendar },
-    { path: '/lessons', label: 'Lessons', icon: Book },
+    { path: '/courses', label: 'courses', icon: Book },
     { path: '/schedule', label: 'Schedule', icon: Clock },
     ...(isAdmin ? [{ path: '/dashboard', label: 'Admin Dashboard', icon: Settings }] : []),
   ];
