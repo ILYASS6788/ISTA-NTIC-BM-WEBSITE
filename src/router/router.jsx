@@ -1,6 +1,5 @@
 import {
   createBrowserRouter,
-  RouterProvider,
   Navigate,
 } from "react-router-dom";
 import HomePage from "../pages/HomePage";
@@ -11,6 +10,7 @@ import DashboardPage from "../pages/DashboardPage";
 import App from "../App";
 import Login from "../pages/Login";
 import Contact from "../pages/Contact";
+import Entrer from "../pages/Entrer";
 
 // TODO: Replace with actual auth check
 const isAdmin = true; // Temporarily set to true for testing
@@ -46,8 +46,18 @@ const router = createBrowserRouter([
       },
     ]},
     {
-      path:"/login",
-      element: <Login />,
+      path: "/entrer",
+      element: <Entrer />, // Entrer is the container/layout
+      children: [
+        {
+          path: ":entrer_type", // Relative path inside Entrer
+          element: <Login />, // Renders Login page inside Entrer
+        },
+        // {
+        //   path: "forgot-password", // Relative path inside Entrer
+        //   element: <ForgotPassword />, // Renders ForgotPassword inside Entrer
+        // },
+      ],
     }
 ]);
 
