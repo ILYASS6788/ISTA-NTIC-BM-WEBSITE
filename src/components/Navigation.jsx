@@ -12,7 +12,7 @@ export default function Navigation() {
     { path: '/events', label: 'Events', icon: Calendar },
     { path: '/courses', label: 'courses', icon: Book },
     { path: '/schedule', label: 'Schedule', icon: Clock },
-    ...(isAdmin ? [{ path: '/dashboard', label: 'Admin Dashboard', icon: Settings }] : []),
+    ...(isAdmin ? [{ path: '/dashboard', label: 'Admin Dashboard', icon: Settings },] : []),
   ];
 
   const loginNav = { path: '/login', label: 'Login', icon: UserRound };

@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import {Plus, Edit, Trash2 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Plus, Edit, Trash2 } from 'lucide-react';
 import SidebarDashboard from '../components/SidebarDashboard';
 import UsersTable from './Dashboard Components/UsersTable';
 
@@ -9,20 +10,20 @@ const mockEvents = [
     title: 'Student Orientation Day',
     date: 'March 15, 2024',
     description: 'Welcome new students! Join us for an introduction to OFPPT programs and facilities.',
-    location: 'Main Auditorium'
+    location: 'Main Auditorium',
   },
   {
     id: '2',
     title: 'Technology Workshop',
     date: 'March 20, 2024',
     description: 'Hands-on workshop on emerging technologies in web development.',
-    location: 'Lab Building B'
-  }
+    location: 'Lab Building B',
+  },
 ];
 
 export default function DashboardPage() {
   const [activeTab, setActiveTab] = useState('events');
-  const [showEventModal, setShowEventModal] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -36,13 +37,33 @@ export default function DashboardPage() {
             <h1 className="text-2xl font-bold text-gray-900">
               {activeTab.charAt(0).toUpperCase() + activeTab.slice(1)} Management
             </h1>
-            <button
-              onClick={() => setShowEventModal(true)}
-              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 flex items-center space-x-2"
-            >
-              <Plus className="h-5 w-5" />
-              <span className='max-[850px]:hidden'>Add New {activeTab.slice(0, -1)}</span>
-            </button>
+            {activeTab === 'lessons' && (
+              <button
+                onClick={() => navigate('/add-lesson')}
+                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 flex items-center space-x-2"
+              >
+                <Plus className="h-5 w-5" />
+                <span className="max-[850px]:hidden">Add New Lesson</span>
+              </button>
+            )}
+            {activeTab === 'events' && (
+              <button
+                onClick={() => navigate('/add-event')}
+                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 flex items-center space-x-2"
+              >
+                <Plus className="h-5 w-5" />
+                <span className="max-[850px]:hidden">Add New Event</span>
+              </button>
+            )}
+            {activeTab === 'schedule' && (
+              <button
+                onClick={() => navigate('/add-schedule')}
+                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 flex items-center space-x-2"
+              >
+                <Plus className="h-5 w-5" />
+                <span className="max-[850px]:hidden">Add New Schedule</span>
+              </button>
+            )}
           </div>
 
           {/* Events Table */}
@@ -72,12 +93,8 @@ export default function DashboardPage() {
                         <div className="text-sm font-medium text-gray-900">{event.title}</div>
                         <div className="text-sm text-gray-500">{event.description}</div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {event.date}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {event.location}
-                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{event.date}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{event.location}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                         <button className="text-blue-600 hover:text-blue-900 mr-4">
                           <Edit className="h-5 w-5" />
@@ -107,9 +124,7 @@ export default function DashboardPage() {
                 {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'].map((day) => (
                   <div key={day} className="border rounded-lg p-4">
                     <h3 className="font-semibold mb-2">{day}</h3>
-                    <button className="text-blue-600 hover:text-blue-800 text-sm">
-                      + Add Session
-                    </button>
+                    <button className="text-blue-600 hover:text-blue-800 text-sm">+ Add Session</button>
                   </div>
                 ))}
               </div>
@@ -154,9 +169,7 @@ export default function DashboardPage() {
           )}
 
           {/* Users Management */}
-          {activeTab === 'users' && (
-           <UsersTable />
-          )}
+          {activeTab === 'users' && <UsersTable />}
         </div>
       </div>
     </div>
