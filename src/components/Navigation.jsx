@@ -1,12 +1,15 @@
 import { useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { Settings, Calendar, Book, Clock, UserRound, Menu } from "lucide-react";
+import { useSelector } from "react-redux";
+import UserAvatar from "./UserAvatar";
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
+  const {role,user}= useSelector((state)=>state.authUser)
   const location = useLocation();
 
-  const isAdmin = true;
+  const isAdmin = role;
 
   const navItems = [
     { path: "/", label: "Home", icon: Calendar },
@@ -18,7 +21,7 @@ export default function Navigation() {
       : []),
   ];
 
-  const loginNav = { path: "/entrer/login", label: "M’inscrire", icon: UserRound };
+  const loginNav = { path: "/entrer/join-us", label: "M’inscrire", icon: UserRound };
 
   return (
     <nav className="bg-white dark:bg-gray-900 w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
@@ -37,20 +40,21 @@ export default function Navigation() {
         </NavLink>
 
         {location.pathname !== loginNav.path && (
-          <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse w-58">
+          <div className={`flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse ${user ? 'w-40' : 'w-58'}`}>
+          {user ? (<UserAvatar user={user} />) :
           <NavLink
-            to={loginNav.path}
-            className="flex items-center gap-2 px-6 py-2 font-bold text-blue-600 bg-white rounded-lg 
-             border-t-2 border-l-2 border-b-2 border-r-2 
-             border-t-white border-l-white border-b-blue-600 border-r-blue-600 
-             transition-all duration-1000 
-             hover:border-t-blue-600 hover:border-l-blue-600 
-             hover:border-b-sky-400 hover:border-r-sky-400 
-             hover:shadow-[5px_5px_rgba(59,130,246,0.4),10px_10px_rgba(59,130,246,0.3),15px_15px_rgba(59,130,246,0.2)]"
-          >
-            <span>{loginNav.label}</span>
-            <loginNav.icon />
-          </NavLink>
+          to={loginNav.path}
+          className="flex items-center gap-2 px-6 py-2 font-bold text-blue-600 bg-white rounded-lg 
+           border-t-2 border-l-2 border-b-2 border-r-2 
+           border-t-white border-l-white border-b-blue-600 border-r-blue-600 
+           transition-all duration-1000 
+           hover:border-t-blue-600 hover:border-l-blue-600 
+           hover:border-b-sky-400 hover:border-r-sky-400 
+           hover:shadow-[5px_5px_rgba(59,130,246,0.4),10px_10px_rgba(59,130,246,0.3),15px_15px_rgba(59,130,246,0.2)]"
+        >
+          <span>{loginNav.label}</span>
+          <loginNav.icon />
+        </NavLink>}
 
           {/* Hamburger Button for Mobile */}
           <button

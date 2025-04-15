@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import {Plus, Edit, Trash2 } from 'lucide-react';
 import SidebarDashboard from '../components/SidebarDashboard';
-import UsersTable from './Dashboard Components/UsersTable';
 
 const mockEvents = [
   {
@@ -154,9 +153,7 @@ export default function DashboardPage() {
           )}
 
           {/* Users Management */}
-          {activeTab === 'users' && (
-           <UsersTable />
-          )}
+          
         </div>
       </div>
     </div>
