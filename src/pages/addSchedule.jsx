@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 export default function AddSchedulePage() {
+
   const navigate = useNavigate();
   const [schedule, setSchedule] = useState({
     startTime: "",
@@ -33,124 +34,50 @@ export default function AddSchedulePage() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-6 bg-gradient-to-br from-blue-100 via-blue-200 to-indigo-300 rounded-xl shadow-lg">
-      <form
-        className="space-y-6 bg-white p-8 rounded-xl shadow-xl"
-        onSubmit={handleSubmit}
+    <div className="w-svh mx-auto p-2 bg-gradient-to-br from-blue-100 via-blue-200 to-indigo-300 rounded-xl shadow-lg h-110 mt-9 ">
+      <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center"> Add New Schedule</h2>
+
+      <label
+        for="grpoup"
+        class="block mb-2 text-center font-medium text-gray-900 dark:text-black"
       >
-        <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">
-          Add New Schedule
-        </h2>
-
-        <div className="mb-6">
-          <label
-            className="block text-lg font-semibold text-gray-700 mb-2"
-            htmlFor="startTime"
-          >
-            Start Time
-          </label>
+        Select Group
+      </label>
+      <select
+        id="countries"
+        className="bg-gray-50 border  border-gray-300 text-gray-900   rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-100 py-2 px-5 m-9 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+      >
+        <option selected>Choose a Group</option>
+        <option value="US">devloppement web 1A</option>
+        <option value="CA">devloppement web 2A</option>
+        <option value="FR">infrastructure digital 1A</option>
+        <option value="DE">infrastricture digital 1A</option>
+      </select>
+      <div className=" flex gap-4 mb-4 ml-40 mt-17">
+          <label className="block mb-1 font-medium text-gray-700">schudule Materials (PDFs) :</label>
           <input
-            type="time"
-            id="startTime"
-            name="startTime"
-            value={schedule.startTime}
-            onChange={handleChange}
-            className="w-full p-3 border-2 border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required
+            type="file"
+            accept=".pdf"
+            multiple
+            className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
           />
         </div>
 
-        <div className="mb-6">
-          <label
-            className="block text-lg font-semibold text-gray-700 mb-2"
-            htmlFor="endTime"
-          >
-            End Time
-          </label>
-          <input
-            type="time"
-            id="endTime"
-            name="endTime"
-            value={schedule.endTime}
-            onChange={handleChange}
-            className="w-full p-3 border-2 border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required
-          />
-        </div>
-
-        <div className="mb-6">
-          <label
-            className="block text-lg font-semibold text-gray-700 mb-2"
-            htmlFor="subject"
-          >
-            Subject
-          </label>
-          <input
-            type="text"
-            id="subject"
-            name="subject"
-            value={schedule.subject}
-            onChange={handleChange}
-            className="w-full p-3 border-2 border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="e.g., Math"
-            required
-          />
-        </div>
-
-        <div className="mb-6">
-          <label
-            className="block text-lg font-semibold text-gray-700 mb-2"
-            htmlFor="instructor"
-          >
-            Instructor
-          </label>
-          <input
-            type="text"
-            id="instructor"
-            name="instructor"
-            value={schedule.instructor}
-            onChange={handleChange}
-            className="w-full p-3 border-2 border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="e.g., Mr. Smith"
-            required
-          />
-        </div>
-
-        <div className="mb-6">
-          <label
-            className="block text-lg font-semibold text-gray-700 mb-2"
-            htmlFor="room"
-          >
-            Room
-          </label>
-          <input
-            type="text"
-            id="room"
-            name="room"
-            value={schedule.room}
-            onChange={handleChange}
-            className="w-full p-3 border-2 border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="e.g., Room 101"
-            required
-          />
-        </div>
-
-        <div className="flex justify-around ">
-          <button
-            type="submit"
-            className="w-50  bg-blue-600 text-white text-lg font-semibold  shadow-md hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 rounded-xl"
-          >
-            Add Schedule
-          </button>
-          <button
-            type="button"
-            onClick={() => navigate("/dashboard")}
-            className="w-50 bg-gray-300 hover:bg-gray-400 text-gray-700 font-semibold py-2  rounded-xl transition-all duration-200 text-lg"
-          >
-            Cancel
-          </button>
-        </div>
-      </form>
+      <div className="flex justify-around mt-17 ">
+        <button
+          type="submit"
+          className="w-50  bg-blue-600 text-white text-lg font-semibold  shadow-md hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 rounded-xl"
+        >
+          Add Schedule
+        </button>
+        <button
+          type="button"
+          onClick={() => navigate("/dashboard")}
+          className="w-50 bg-gray-300 hover:bg-gray-400 text-gray-700 font-semibold py-2  rounded-xl transition-all duration-200 text-lg"
+        >
+          Cancel
+        </button>
+      </div>
     </div>
   );
 }

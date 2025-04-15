@@ -1,3 +1,4 @@
+import { File } from 'lucide-react';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 export default function AddCourseForm  ()  {
@@ -14,64 +15,65 @@ export default function AddCourseForm  ()  {
   };
 
   return (
-    <div className="max-w-3xl mx-auto p-6 bg-white shadow-xl rounded-2xl mt-10">
+    <div className="w-full mx-auto p-6 bg-white shadow-xl rounded-2xl">
 
       <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center"> Add New Course</h2>
       <form onSubmit={handleSubmit} className="space-y-5">
 
         {/* Course Title */}
-        <div>
-          <label className="block mb-1 text-sm font-medium text-gray-700">Course Title</label>
+        <div className="col-span-2 row-start-3 row-end-4 flex gap-1 flex-col md:flex-row">
+        <div className='w-full md:w-1/2'>
+          <label className="block font-medium text-gray-700">Title</label>
           <input
             type="text"
-            placeholder="e.g. JavaScript Fundamentals"
-            className="w-full px-4 py-2 border rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required
+            name="title"
+            className="w-full p-2 border border-gray-300 rounded-md block py-2.5 px-0  text-gray-900 bg-transparent border-b-2   dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
           />
         </div>
-
-        {/* Subject */}
-        <div>
-          <label className="block mb-1 text-sm font-medium text-gray-700">Subject</label>
+        <div className='w-full md:w-1/2'>
+          <label className="block font-medium text-gray-700">Subject</label>
           <input
             type="text"
-            placeholder="e.g. Web Development"
-            className="w-full px-4 py-2 border rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required
+            name="subject"
+            className="w-full p-2 border border-gray-300 rounded-md block py-2.5 px-0  text-gray-900 bg-transparent border-b-2   dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
           />
         </div>
+      </div>
 
         {/* Instructor */}
-        <div>
-          <label className="block mb-1 text-sm font-medium text-gray-700">Instructor</label>
+        <div className="col-span-2 row-start-3 row-end-4 flex gap-4 flex-col md:flex-row">
+        <div className='w-full md:w-1/2'>
+          <label className="block font-medium text-gray-700">Intructor</label>
           <input
             type="text"
-            placeholder="e.g. Mr. Karim"
-            className="w-full px-4 py-2 border rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required
+            name="instructor"
+            className="w-full p-2 border border-gray-300 rounded-md block py-2.5 px-0  text-gray-900 bg-transparent border-b-2   dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
           />
         </div>
-
-        {/* Class */}
-        <div>
-          <label className="block mb-1 text-sm font-medium text-gray-700">Class</label>
+        <div className='w-full md:w-1/2'>
+          <label className="block font-medium text-gray-700">Class</label>
           <input
             type="text"
-            placeholder="e.g. Development Web - Year 1"
-            className="w-full px-4 py-2 border rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required
+            name="class"
+            className="w-full p-2 border border-gray-300 rounded-md block py-2.5 px-0  text-gray-900 bg-transparent border-b-2   dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
           />
         </div>
+      </div>
 
         {/* Course Materials (PDF Upload) */}
-        <div>
-          <label className="block mb-1 text-sm font-medium text-gray-700">Course Materials (PDFs)</label>
+        <div className="flex items-center justify-center my-2 rounded-b-md border-2 border-dashed border-gray-300 p-4">
+          <label htmlFor='courseFile' 
+          className="grid place-content-center w-full p-2  font-medium text-gray-700 cursor-pointer">
+            <File className='text-indigo-700 mx-auto w-16 h-16' />
+            Course Materials (PDFs)
+          </label>
           <input
+          id='courseFile'
             type="file"
             accept=".pdf"
             multiple
             onChange={handleFileChange}
-            className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+            className="hidden w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
           />
         </div>
 
