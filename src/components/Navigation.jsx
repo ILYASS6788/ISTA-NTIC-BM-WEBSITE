@@ -9,13 +9,11 @@ export default function Navigation() {
   const isAdmin = true;
 
   const navItems = [
-    { path: "/", label: "Home", icon: Calendar },
-    { path: "/events", label: "Events", icon: Calendar },
-    { path: "/courses", label: "courses", icon: Book },
-    { path: "/schedule", label: "Schedule", icon: Clock },
-    ...(isAdmin
-      ? [{ path: "/dashboard", label: "Admin Dashboard", icon: Settings }]
-      : []),
+    { path: '/', label: 'Home', icon: Calendar },
+    { path: '/events', label: 'Events', icon: Calendar },
+    { path: '/courses', label: 'courses', icon: Book },
+    { path: '/schedule', label: 'Schedule', icon: Clock },
+    ...(isAdmin ? [{ path: '/dashboard/events', label: 'Admin Dashboard', icon: Settings },] : []),
   ];
 
   const loginNav = { path: "/entrer/login", label: "M’inscrire", icon: UserRound };
@@ -72,7 +70,7 @@ export default function Navigation() {
               <NavLink
                 to={link.path}
                 className={({ isActive }) =>
-                  isActive
+                  isActive 
                     ? 'm-0 flex items-center space-x-1 px-3 py-2 rounded-md text-sm font-medium bg-blue-600 text-white'
                     : 'm-0 flex items-center space-x-1 px-3 py-2 rounded-md text-sm font-medium hover:bg-blue-600 text-white'
                 }
