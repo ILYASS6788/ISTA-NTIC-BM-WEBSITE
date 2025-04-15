@@ -13,7 +13,7 @@ export default function Contact() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Map */}
+          {/* Map */}
           <div className="bg-white rounded-xl shadow-lg overflow-hidden">
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3370.465766960451!2d-6.337034!3d32.353048699999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xda3866c8b3d4ae5%3A0x60d67c2ebcfa467e!2sISTA%20NTIC%20BENI%20MELLAL!5e0!3m2!1sen!2sma!4v1744165724575!5m2!1sen!2sma"
@@ -43,7 +43,9 @@ export default function Contact() {
               <div className="flex items-center space-x-4">
                 <Phone className="w-6 h-6 text-blue-600" />
                 <div>
-                  <p className="text-gray-600">0523423760</p>
+                  <a href="tel:0523423760" className="text-gray-600">
+                    0523423760
+                  </a>
                 </div>
               </div>
 
@@ -65,8 +67,12 @@ export default function Contact() {
                 Heures d'ouverture
               </h3>
               <div className="space-y-2 text-gray-600">
-                <p className="border-s-4 border-l-blue-500 ps-2">Lundi - Vendredi: 8:30 - 18:30</p>
-                <p className="border-s-4 border-l-red-500 ps-2">Samedi - Dimanche: Fermé</p>
+                <p className="border-s-4 border-l-blue-500 ps-2">
+                  Lundi - Vendredi: 8:30 - 18:30
+                </p>
+                <p className="border-s-4 border-l-red-500 ps-2">
+                  Samedi - Dimanche: Fermé
+                </p>
               </div>
             </div>
           </div>
