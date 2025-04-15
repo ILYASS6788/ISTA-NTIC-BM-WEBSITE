@@ -84,7 +84,7 @@ const router = createBrowserRouter([
       element: <Entrer />, // Entrer is the container/layout
       children: [
         {
-          path: ":entrer_type", // Relative path inside Entrer
+          path: "join-us", // Relative path inside Entrer
           element: <Login />, // Renders Login page inside Entrer
         },
         // {
