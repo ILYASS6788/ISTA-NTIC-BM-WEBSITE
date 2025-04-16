@@ -5,7 +5,7 @@ const mockEvents = [];
 export default function EventDasboard() {
   const navigate = useNavigate();
   return (
-    <div className="flex-1 p-8 flex-grow">
+    <div className="flex-1 p-2 md:p-8 flex-grow">
       <div className="mb-8 flex justify-between items-center">
         <h1 className="text-2xl font-bold text-gray-900">Management Events</h1>
         <button
@@ -16,7 +16,7 @@ export default function EventDasboard() {
           <span className="max-[850px]:hidden">Add New Lesson</span>
         </button>
       </div>
-      <div className="bg-white rounded-lg shadow">
+      <div className="bg-white rounded-lg shadow overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>

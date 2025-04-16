@@ -3,29 +3,38 @@ import SeConnecter from "../components/SeConnecter";
 import Loader from "../Loader";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../sotre/slices/AuthSlice";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import ErrorAlert from "../components/ErrorAlert";
 
-function Login() {
+export default function Login() {
+  
   const [isLoading, setIsLoading] = useState(true);
+  const [ErrorMesg, setErrorMsg] = useState(null);
   const [isRegistering, setIsRegistering] = useState(false);
   const [infos, setInfos] = useState({ name: "", email: "", password: "" });
-  const {user,error, loading} = useSelector((state) =>state.authUser);
+  const { user, error, loading ,role} = useSelector((state) => state.authUser);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const location = useLocation();
 
   useEffect(() => {
-    const socialLogin = () => {
-      const Params = new URLSearchParams(window.location.search);
-      const logIn = Params.get("log-in");
-      if (logIn === "true") {
+      const Params = new URLSearchParams(location.search);
+      const logInparam = Params.get("log-in");
+      const Error_param = Params.get("error");
+      console.log(logInparam)
+
+      if (logInparam === "true") {
         dispatch(loginUser({ urlApi: "user/social" }));
       }
-      
-    };
-    socialLogin();
-    console.log(error)
-  },[window.location.search]);
+      if (logInparam === "failed") {
+        setErrorMsg("Échec de l'authentification, veuillez réessayer.");
+      }
+      if (Error_param === "NotFound") {
+        setErrorMsg("Impossible de récupérer l'adresse e-mail depuis Google.");
+      }
+    
+  }, [location.search]);
+
   useEffect(() => {
     const loadingAnimation = setTimeout(() => {
       setIsLoading(false);
@@ -33,17 +42,24 @@ function Login() {
     return () => clearTimeout(loadingAnimation);
   }, []);
 
+ 
+  useEffect(() => {
+    setErrorMsg(error || null)
+  }, [error]);
+
   if (isLoading || loading) {
     return <Loader />;
   }
 
-  if(user){
-    return navigate('/');
+  if (user) {
+    role === 'admin' ? navigate("/dashboard/events") : navigate('/');
+    return null; 
   }
+
   return (
     <>
-    
-      {/* Left Side - Form */}
+      <ErrorAlert message={ErrorMesg} onClose={() => setErrorMsg(null)} />
+
       <SeConnecter
         isRegistering={isRegistering}
         setIsRegistering={setIsRegistering}
@@ -51,9 +67,7 @@ function Login() {
         setInfos={setInfos}
       />
 
-      {/* Right Side - Responsive Image */}
-
-      <div className="hidden p-10 md:flex w-fit items-center justify-center">
+      <div className="hidden p-10 md:flex min-w-96 items-center justify-center">
         <img
           className=" h-auto max-w-3/5"
           src="/login-register-banner.svg"
@@ -65,4 +79,3 @@ function Login() {
   );
 }
 
-export default Login;

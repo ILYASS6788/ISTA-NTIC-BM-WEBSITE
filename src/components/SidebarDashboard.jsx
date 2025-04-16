@@ -6,7 +6,7 @@ export default function SidebarDashboard() {
   const Navigate = useNavigate();
   const location = useLocation();
   return (
-    <div className="bg-blue-800 min-h-screen p-4">
+    <div className="bg-blue-800 min-h-screen p-2">
           <div className="flex items-center max-[850px]:flex-col space-x-2 text-white mb-4 pb-3 border-b-2 border-amber-50">
             <Settings className="h-6 w-6" />
             <span className="max-[850px]:hidden text-lg font-semibold">Admin Dashboard</span>

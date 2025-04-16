@@ -9,14 +9,14 @@ export default function Navigation() {
   const {role,user}= useSelector((state)=>state.authUser)
   const location = useLocation();
 
-  const isAdmin = role;
+  const isAdmin = true;
 
   const navItems = [
     { path: '/', label: 'Home', icon: Calendar },
     { path: '/events', label: 'Events', icon: Calendar },
     { path: '/courses', label: 'courses', icon: Book },
     { path: '/schedule', label: 'Schedule', icon: Clock },
-    ...(isAdmin ? [{ path: '/dashboard/events', label: 'Admin Dashboard', icon: Settings },] : []),
+    ...(isAdmin ? [{ path: '/dashboard', label: 'Admin Dashboard', icon: Settings },] : []),
   ];
 
   const loginNav = { path: "/entrer/join-us", label: "M’inscrire", icon: UserRound };
@@ -38,11 +38,11 @@ export default function Navigation() {
         </NavLink>
 
         {location.pathname !== loginNav.path && (
-          <div className={`flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse ${user ? 'w-40' : 'w-58'}`}>
+          <div className={`flex items-center  md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse`}>
           {user ? (<UserAvatar user={user} />) :
           <NavLink
           to={loginNav.path}
-          className="flex items-center gap-2 px-6 py-2 font-bold text-blue-600 bg-white rounded-lg 
+          className="flex items-center gap-2 p-3 md:px-6 py-2 text-sm md:text-[18px] font-bold text-blue-600 bg-white rounded-lg 
            border-t-2 border-l-2 border-b-2 border-r-2 
            border-t-white border-l-white border-b-blue-600 border-r-blue-600 
            transition-all duration-1000 
@@ -51,13 +51,13 @@ export default function Navigation() {
            hover:shadow-[5px_5px_rgba(59,130,246,0.4),10px_10px_rgba(59,130,246,0.3),15px_15px_rgba(59,130,246,0.2)]"
         >
           <span>{loginNav.label}</span>
-          <loginNav.icon />
+          <loginNav.icon className="w-5 md:w-8 h-5 md:h-8" />
         </NavLink>}
 
           {/* Hamburger Button for Mobile */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="inline-flex items-center p-2 ms-4 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+            className="inline-flex items-center p-2 ms-1.5 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
             aria-controls="navbar-sticky"
             aria-expanded={isOpen}
           >

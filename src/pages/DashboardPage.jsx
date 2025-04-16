@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { Outlet} from "react-router-dom";
+import { Outlet, useLocation} from "react-router-dom";
 import SidebarDashboard from "../components/SidebarDashboard";
 export default function DashboardPage() {
   const [activeTab, setActiveTab] = useState("events");
+  const Location = useLocation();
 
 
   return (
@@ -12,8 +13,12 @@ export default function DashboardPage() {
         <SidebarDashboard setActiveTab={setActiveTab} activeTab={activeTab} />
 
         {/* Main Content */}
-          <Outlet />
-        
+        <section className="w-full">
+          {Location.pathname !== '/dashboard' ?
+          <Outlet /> :
+          <h1>Dashboard</h1>
+          }
+        </section>
       </div>
     </div>
   );
