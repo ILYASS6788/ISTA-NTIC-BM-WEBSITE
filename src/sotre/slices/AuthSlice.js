@@ -26,9 +26,18 @@ export const loginUser = createAsyncThunk("authUser/loginUser", async ({ urlApi,
                 body: userInfo ? JSON.stringify(userInfo) : null
             });
             if (!res.ok) {
-                const error = await res.json();
-                
-                return rejectWithValue(error.message || "Échec de l'authentification, veuillez réessayer.");
+                const status = res.status;
+                let errorMsg = "Échec de l'authentification, veuillez réessayer."
+                if(status=== 500 || status === 502 || status === 503){
+                    errorMsg="Erreur de connexion. Veuillez réessayer plus tard."
+                } else if(status === 401){
+                    const error = await res.json();   
+                return rejectWithValue(error.message || "Échec de l'authentification, veuillez réessayer.");    
+                }
+                else if(status=== 419){
+                    errorMsg = "Session expirée. Veuillez vous reconnecter."
+                }
+                return rejectWithValue(errorMsg);
             }
             
             const data = await res.json();

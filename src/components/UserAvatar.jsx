@@ -1,6 +1,6 @@
 import { UserCircle } from "lucide-react";
 import React, { useRef, useState, useEffect } from "react";
-import { loginUser } from "../sotre/slices/AuthSlice";
+import { loginUser } from '../sotre/slices/AuthSlice'
 import { useDispatch } from "react-redux";
 
 export default function UserAvatar({ user }) {
