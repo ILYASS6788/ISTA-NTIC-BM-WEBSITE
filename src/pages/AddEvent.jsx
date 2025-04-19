@@ -17,7 +17,7 @@ export default function AddEventPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Submit event to your backend (e.g., Laravel API)
+    
     setEvent({
       title: "",
       description: "",

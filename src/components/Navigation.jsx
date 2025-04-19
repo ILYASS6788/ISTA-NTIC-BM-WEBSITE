@@ -4,7 +4,7 @@ import { Settings, Calendar, Book, Clock, UserRound, Menu } from "lucide-react";
 import { useSelector } from "react-redux";
 import UserAvatar from "./UserAvatar";
 
-export default function Navigation() {
+export default function Navigation({setIsLogOut}) {
   const [isOpen, setIsOpen] = useState(false);
   const {role,user}= useSelector((state)=>state.authUser)
   const location = useLocation();
@@ -39,7 +39,7 @@ export default function Navigation() {
 
         {location.pathname !== loginNav.path && (
           <div className={`flex items-center  md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse`}>
-          {user ? (<UserAvatar user={user} />) :
+          {user ? (<UserAvatar user={user} setIsLogOut={setIsLogOut} />) :
           <NavLink
           to={loginNav.path}
           className="flex items-center gap-2 p-3 md:px-6 py-2 text-sm md:text-[18px] font-bold text-blue-600 bg-white rounded-lg 

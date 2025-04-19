@@ -4,6 +4,9 @@
     justify-content: center;
     align-items: center;
     height: 500px;
+    position: absolute;
+    inset: 0;
+    z-index: 9999;
   }
   
   /* Loader container */

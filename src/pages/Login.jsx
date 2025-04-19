@@ -9,24 +9,24 @@ import ErrorAlert from "../components/ErrorAlert";
 export default function Login() {
   
   const [isLoading, setIsLoading] = useState(true);
-  const [ErrorMesg, setErrorMsg] = useState(null);
   const [isRegistering, setIsRegistering] = useState(false);
-  const [infos, setInfos] = useState({ name: "", email: "", password: "" });
-  const { user, error, loading ,role} = useSelector((state) => state.authUser);
+  const { user, loading ,role,error} = useSelector((state) => state.authUser);
+  const [ErrorMesg, setErrorMsg] = useState(null);
+  
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
       const Params = new URLSearchParams(location.search);
-      const logInparam = Params.get("log-in");
+      const logInToken = Params.get("token");
       const Error_param = Params.get("error");
-      console.log(logInparam)
-
-      if (logInparam === "true") {
-        dispatch(loginUser({ urlApi: "user/social" }));
+    console.log(logInToken)
+      if (logInToken) {
+        localStorage.setItem('auth_token',logInToken)
+        dispatch(loginUser({ urlApi: "user" ,token:logInToken}));
       }
-      if (logInparam === "failed") {
+      if (logInToken === "failed") {
         setErrorMsg("Échec de l'authentification, veuillez réessayer.");
       }
       if (Error_param === "NotFound") {
@@ -43,13 +43,10 @@ export default function Login() {
   }, []);
 
  
-  useEffect(() => {
-    setErrorMsg(error || null)
-  }, [error]);
 
-  if (isLoading || loading) {
-    return <Loader />;
-  }
+  // if (isLoading || loading) {
+  //   return <Loader />;
+  // }
 
   if (user) {
     role === 'admin' ? navigate("/dashboard/events") : navigate('/');
@@ -58,18 +55,17 @@ export default function Login() {
 
   return (
     <>
+    {(loading || isLoading) && <Loader /> }
       <ErrorAlert message={ErrorMesg} onClose={() => setErrorMsg(null)} />
 
       <SeConnecter
         isRegistering={isRegistering}
         setIsRegistering={setIsRegistering}
-        infos={infos}
-        setInfos={setInfos}
       />
 
-      <div className="hidden p-10 md:flex min-w-96 items-center justify-center">
+      <div className="hidden p-5 md:flex min-w-56 items-center justify-center">
         <img
-          className=" h-auto max-w-3/5"
+          className=" h-auto max-w-4/5"
           src="/login-register-banner.svg"
           alt="login banner"
           loading="eager"

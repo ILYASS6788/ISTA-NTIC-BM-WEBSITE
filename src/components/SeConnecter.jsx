@@ -1,12 +1,51 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { GraduationCap, Mail, Lock, Eye, EyeOff } from "lucide-react";
 import SocialLoginBtn from "./SocialLoginBtn";
+import { useDispatch, useSelector} from "react-redux";
+import { loginUser } from "../sotre/slices/AuthSlice";
 
-export default function SeConnecter({ isRegistering, setIsRegistering ,infos,setInfos}) {
-  const [showPassword, setShowPassword] = useState(false);
+export default function SeConnecter({ isRegistering, setIsRegistering}) {
+  const [showPassword, setShowPassword] = useState(false); 
+  const {error} = useSelector((state)=>state.authUser)
+  const [errorMsg, setErrorMsg] = useState(null);
+  const name = useRef(null)
+  const email = useRef(null)
+  const password = useRef(null)
+  const dispatch=useDispatch();
+  
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    const emailValue = email.current.value;
+    const passwordValue = password.current.value;
+    
+    
+    const url = isRegistering ? 'register' : 'login'
+    
+    if (emailValue && passwordValue) {
+      
+       
+        await dispatch(
+          loginUser({
+            urlApi: url,
+            userInfo: { email: emailValue, password: passwordValue, ...(isRegistering ? {name : name.current.value} : {}),},
+          }));
+        
+    }
+  };
+
+  useEffect(()=>{
+    setErrorMsg(error)
+    if(isRegistering){
+      setErrorMsg(null)
+      name.current.value=""
+      email.current.value=""
+      password.current.value=""
+    }
+  },[error,isRegistering])
+
 
   return (
-    <div className="w-full max-w-md mx-auto px-4 sm:px-6 md:px-8">
+    <div className="w-full max-w-md px-4 sm:px-6 md:px-8">
       {/* Header - inside main container */}
       <div className="text-center py-4 sm:py-6">
         <div className="flex justify-center">
@@ -27,34 +66,34 @@ export default function SeConnecter({ isRegistering, setIsRegistering ,infos,set
           <SocialLoginBtn isRegistering={isRegistering} SocialType={"google"} />
         </div>
 
-        {/* Email */}
-        <form className="mt-4 sm:mt-5 space-y-4 sm:space-y-6 w-full">
+        {/* Nom */}
+        <form className="mt-4 sm:mt-5 space-y-4 sm:space-y-6 w-full"  onSubmit={ handleLogin}>
           <div className="space-y-3 sm:space-y-4">
-            {isRegistering &&  (
-              <div>
-              <label
-                htmlFor="name"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Nom
-              </label>
-              <div className="mt-1 relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Mail className="h-4 w-4 sm:h-5 sm:w-5 text-gray-400" />
-                </div>
-                <input
-                name="name"
-                  id="name"
-                  type="text"
-                  required
-                  value={infos.email}
-                  onChange={(e) => setInfos({ ...infos, name: e.target.value })}
-                  className="block w-full pl-10 pr-3 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                  placeholder="Entrez votre nom"
-                />
+           {isRegistering && (
+            <div>
+            <label
+              htmlFor="name"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Nom
+            </label>
+            <div className="mt-1 relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <Mail className="h-4 w-4 sm:h-5 sm:w-5 text-gray-400" />
               </div>
+              <input
+              name="name"
+                id="name"
+                type="text"
+                required
+                ref={name}
+                className="block w-full pl-10 pr-3 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                placeholder="Entrez votre nom"
+              />
             </div>
-            )}
+            
+          </div>
+           )}
             <div>
               <label
                 htmlFor="email"
@@ -71,11 +110,13 @@ export default function SeConnecter({ isRegistering, setIsRegistering ,infos,set
                   id="email"
                   type="email"
                   required
-                  value={infos.email}
-                  onChange={(e) => setInfos({ ...infos, email: e.target.value })}
+                  ref={email}
                   className="block w-full pl-10 pr-3 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                   placeholder="Entrez votre email"
                 />
+                {errorMsg && (
+                  <p className="text-red-600 text-xs">{errorMsg}</p>
+                )}
               </div>
             </div>
 
@@ -96,10 +137,7 @@ export default function SeConnecter({ isRegistering, setIsRegistering ,infos,set
                   id="password"
                   type={showPassword ? "text" : "password"}
                   required
-                  value={infos.password}
-                  onChange={(e) =>
-                    setInfos({ ...infos, password: e.target.value })
-                  }
+                 ref={password}
                   className="block w-full pl-10 pr-10 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                   placeholder="Entrez votre mot de passe"
                 />
