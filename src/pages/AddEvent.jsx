@@ -1,5 +1,7 @@
+
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import GoBackBtn from "../components/GoBackBtn";
 
 export default function AddEventPage() {
   const navigate = useNavigate();
@@ -30,6 +32,10 @@ export default function AddEventPage() {
 
   return (
     <div className="min-h-fit bg-gey-50 w-fulll py-4 px-2 sm:py-6 sm:px-4 md:py-8 md:px-6 lg:px-8">
+      <div>
+      <GoBackBtn />
+
+      </div>
   <div className="w-full max-w-3xl mx-auto">
     <form
       onSubmit={handleSubmit}
@@ -139,7 +145,7 @@ export default function AddEventPage() {
                 </label>
                 <p className="text-gray-500">or drag and drop</p>
               </div>
-              <p className="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
+              <p className="text-xs text-gray-500">PNG, JPG,... 10MB</p>
             </div>
           </div>
         </div>

@@ -1,20 +1,19 @@
+import { useEffect } from 'react';
 import EventCarousel from '../components/EventCarousel';
 import Features from '../components/Features';
+import { useSelector } from 'react-redux';
+import { fetchEvents } from '../sotre/slices/EventSlice';
 
 
 
 export default function HomePage() {
-  useEffect(() => {
-    async function fetchData() {
-      await dispatch(addEvents({ urlApi: "getevents" }));
-    }
-    fetchData();
-  }, []);
+  const {events} = useSelector((state)=>state.EventsData)
+  
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <section className="mb-12">
-          <EventCarousel events={mockEvents} />
+          <EventCarousel events={events} />
         </section>
 
         
