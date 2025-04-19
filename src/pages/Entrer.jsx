@@ -7,7 +7,7 @@ export default function Entrer() {
     <div className="min-h-screen flex flex-col  items-center  justify-stretch">
         <Navigation />
       {/* Main Container */}
-      <section className='flex items-center justify-center px-12 pb-20 md:w-full'>
+      <section className='flex items-center justify-center px-12 pb-20 md:w-full relative'>
         <Outlet />
       </section>
     </div>

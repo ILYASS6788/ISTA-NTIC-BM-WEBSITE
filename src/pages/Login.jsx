@@ -3,29 +3,38 @@ import SeConnecter from "../components/SeConnecter";
 import Loader from "../Loader";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../sotre/slices/AuthSlice";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import ErrorAlert from "../components/ErrorAlert";
 
-function Login() {
+export default function Login() {
+  
   const [isLoading, setIsLoading] = useState(true);
   const [isRegistering, setIsRegistering] = useState(false);
-  const [infos, setInfos] = useState({ name: "", email: "", password: "" });
-  const {user,error, loading} = useSelector((state) =>state.authUser);
+  const { user, loading ,role,error} = useSelector((state) => state.authUser);
+  const [ErrorMesg, setErrorMsg] = useState(null);
+  
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const location = useLocation();
 
   useEffect(() => {
-    const socialLogin = () => {
-      const Params = new URLSearchParams(window.location.search);
-      const logIn = Params.get("log-in");
-      if (logIn === "true") {
-        dispatch(loginUser({ urlApi: "user/social" }));
+      const Params = new URLSearchParams(location.search);
+      const logInToken = Params.get("token");
+      const Error_param = Params.get("error");
+    console.log(logInToken)
+      if (logInToken) {
+        localStorage.setItem('auth_token',logInToken)
+        dispatch(loginUser({ urlApi: "user" ,token:logInToken}));
       }
-      
-    };
-    socialLogin();
-    console.log(error)
-  },[window.location.search]);
+      if (logInToken === "failed") {
+        setErrorMsg("Échec de l'authentification, veuillez réessayer.");
+      }
+      if (Error_param === "NotFound") {
+        setErrorMsg("Impossible de récupérer l'adresse e-mail depuis Google.");
+      }
+    
+  }, [location.search]);
+
   useEffect(() => {
     const loadingAnimation = setTimeout(() => {
       setIsLoading(false);
@@ -33,29 +42,30 @@ function Login() {
     return () => clearTimeout(loadingAnimation);
   }, []);
 
-  if (isLoading || loading) {
-    return <Loader />;
+ 
+
+  // if (isLoading || loading) {
+  //   return <Loader />;
+  // }
+
+  if (user) {
+    role === 'admin' ? navigate("/dashboard/events") : navigate('/');
+    return null; 
   }
 
-  if(user){
-    return navigate('/');
-  }
   return (
     <>
-    
-      {/* Left Side - Form */}
+    {(loading || isLoading) && <Loader /> }
+      <ErrorAlert message={ErrorMesg} onClose={() => setErrorMsg(null)} />
+
       <SeConnecter
         isRegistering={isRegistering}
         setIsRegistering={setIsRegistering}
-        infos={infos}
-        setInfos={setInfos}
       />
 
-      {/* Right Side - Responsive Image */}
-
-      <div className="hidden p-10 md:flex w-fit items-center justify-center">
+      <div className="hidden p-5 md:flex min-w-56 items-center justify-center">
         <img
-          className=" h-auto max-w-3/5"
+          className=" h-auto max-w-4/5"
           src="/login-register-banner.svg"
           alt="login banner"
           loading="eager"
@@ -65,4 +75,3 @@ function Login() {
   );
 }
 
-export default Login;

@@ -1,31 +1,15 @@
 import EventCarousel from '../components/EventCarousel';
 import Features from '../components/Features';
 
-const mockEvents = [
-  {
-    id: '1',
-    title: 'Student Orientation Day',
-    date: 'March 15, 2024',
-    description: 'Welcome new students! Join us for an introduction to OFPPT programs and facilities.',
-    location: 'Main Auditorium'
-  },
-  {
-    id: '2',
-    title: 'Technology Workshop',
-    date: 'March 20, 2024',
-    description: 'Hands-on workshop on emerging technologies in web development.',
-    location: 'Lab Building B'
-  },
-  {
-    id: '3',
-    title: 'Career Fair 2024',
-    date: 'April 5, 2024',
-    description: 'Connect with industry leaders and explore career opportunities.',
-    location: 'Exhibition Hall'
-  }
-];
+
 
 export default function HomePage() {
+  useEffect(() => {
+    async function fetchData() {
+      await dispatch(addEvents({ urlApi: "getevents" }));
+    }
+    fetchData();
+  }, []);
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">

@@ -9,7 +9,7 @@ import LessonsPage from "../pages/LessonsPage";
 import DashboardPage from "../pages/DashboardPage";
 import App from "../App";
 import Login from "../pages/Login";
-import Entrer from "../pages/Entrer"; // Entrer is the container/layout
+import Entrer from "../pages/Entrer"; 
 import Contact from "../pages/Contact";
 import AddEventPage from "../pages/AddEvent";
 import AddSchedulePage from "../pages/addSchedule";
@@ -18,8 +18,6 @@ import ShedulesDashboard from "../pages/Dashboard Components/ShedulesDashboard";
 import LessonDashboard from "../pages/Dashboard Components/LessonDashboard";
 import AddCourseForm from "../pages/addLesson";
 
-// TODO: Replace with actual auth check
-const isAdmin = true; // Temporarily set to true for testing
 
 const router = createBrowserRouter([
   {
@@ -48,7 +46,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/dashboard",
-        element: isAdmin ? <DashboardPage /> : <Navigate to="/"/>,
+        element:  <DashboardPage />,
         children: [
           {
             index: true, 
