@@ -1,6 +1,7 @@
 import { File } from 'lucide-react';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import GoBackBtn from '../components/GoBackBtn';
 export default function AddCourseForm  ()  {
   const [materials, setMaterials] = useState([]);
   const navigate = useNavigate();
@@ -16,7 +17,10 @@ export default function AddCourseForm  ()  {
 
   return (
     <div className="w-full mx-auto p-6 bg-white shadow-xl rounded-2xl">
+      <div>
+      <GoBackBtn />
 
+      </div>
       <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center"> Add New Course</h2>
       <form onSubmit={handleSubmit} className="space-y-5">
 

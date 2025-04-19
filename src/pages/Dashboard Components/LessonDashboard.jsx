@@ -1,20 +1,13 @@
 import { Edit, Trash2, Plus } from "lucide-react";
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import ButtonNav from "../../components/ButtonNav";
 
 export default function LessonDashboard() {
-  const navigate = useNavigate();
   return (
     <div className="flex-1 p-8 flex-grow">
       <div className="mb-8 flex justify-between items-center">
         <h1 className="text-2xl font-bold text-gray-900">Management Events</h1>
-        <button
-          onClick={() => navigate("../add-lesson")}
-          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 flex items-center space-x-2"
-        >
-          <Plus className="h-5 w-5" />
-          <span className="max-[850px]:hidden">Add New Lesson</span>
-        </button>
+        <ButtonNav text={"Ajouter un cours"}  to={'../add-lesson'} />
       </div>
       <div className="bg-white rounded-lg shadow p-6">
         <div className="mb-6 grid grid-cols-2 gap-4">

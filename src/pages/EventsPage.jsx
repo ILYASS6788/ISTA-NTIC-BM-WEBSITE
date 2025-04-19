@@ -1,20 +1,13 @@
-import { useEffect, useState } from "react";
+import React from "react";
 import { Calendar, MapPin, Plus, Bell } from "lucide-react";
-import { useSelector, useDispatch } from "react-redux";
-import { addEvents } from "../sotre/slices/EventSlice";
+import { useSelector } from "react-redux";
 import Loader from "../Loader";
 
 export default function EventsPage() {
   // const [filter, setFilter] = useState('all');
   const { events, loading } = useSelector((state) => state.EventsData);
-  const dispatch = useDispatch();
 
-  useEffect(() => {
-    async function fetchData() {
-      await dispatch(addEvents({ urlApi: "getevents" }));
-    }
-    fetchData();
-  }, []);
+
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">

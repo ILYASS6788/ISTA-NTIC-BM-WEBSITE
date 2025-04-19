@@ -1,40 +1,7 @@
 import { useState } from 'react';
 import { Search, Book, Download, Filter } from 'lucide-react';
 
-const mockLessons = [
-  {
-    id: '1',
-    title: 'Introduction to HTML & CSS',
-    subject: 'Web Development',
-    instructor: 'Dr. Hassan',
-    class: 'Development Web - Year 1',
-    materials: ['slides.pdf', 'exercise.zip', 'example-code.html']
-  },
-  {
-    id: '2',
-    title: 'JavaScript Fundamentals',
-    subject: 'Web Development',
-    instructor: 'Mr. Karim',
-    class: 'Development Web - Year 1',
-    materials: ['lecture-notes.pdf', 'practice-exercises.pdf']
-  },
-  {
-    id: '3',
-    title: 'Database Design Principles',
-    subject: 'Database Management',
-    instructor: 'Prof. Amina',
-    class: 'Development Web - Year 1',
-    materials: ['slides.pdf', 'assignment.pdf']
-  },
-  {
-    id: '4',
-    title: 'React Components & Props',
-    subject: 'Frontend Frameworks',
-    instructor: 'Dr. Omar',
-    class: 'Development Web - Year 1',
-    materials: ['presentation.pdf', 'code-examples.zip']
-  }
-];
+
 
 export default function LessonsPage() {
   const [searchTerm, setSearchTerm] = useState('');

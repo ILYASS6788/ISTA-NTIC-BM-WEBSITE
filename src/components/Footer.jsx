@@ -19,10 +19,10 @@ export default function Footer() {
             <div>
               <h3 className="text-lg font-semibold mb-4 uppercase">Navigation</h3>
               <ul className="space-y-2">
-                <li><a href="/" className="text-gray-400 hover:text-white transition-colors">Accueil</a></li>
-                <li><a href="/presentation" className="text-gray-400 hover:text-white transition-colors">Présentation</a></li>
-                <li><a href="events" className="text-gray-400 hover:text-white transition-colors">Nos événements</a></li>
-                <li><a href="/courses" className="text-gray-400 hover:text-white transition-colors">cours offerts</a></li>
+                <li><Link to="/" className="text-gray-400 hover:text-white transition-colors">Accueil</Link></li>
+                <li><Link to="/presentation" className="text-gray-400 hover:text-white transition-colors">Présentation</Link></li>
+                <li><Link to="events" className="text-gray-400 hover:text-white transition-colors">Nos événements</Link></li>
+                <li><Link to="/courses" className="text-gray-400 hover:text-white transition-colors">cours offerts</Link></li>
               </ul>
             </div>
 
@@ -48,13 +48,13 @@ export default function Footer() {
                   <MapPin className="h-5 w-5 mr-2" />
                   <span className="text-sm">ISTA NTIC BENI MELLAL N8, Mghila 23000</span>
                 </a>
-                <a href="tel:0523423760" className="flex items-center text-gray-400">
+                <Link to="tel:0523423760" className="flex items-center text-gray-400">
                   <Phone className="h-5 w-5 mr-2" />
                   <span className="text-sm">05-23-42-37-60</span>
-                </a>
+                </Link>
                 <div className="flex items-center text-gray-400">
                   <Globe className="h-5 w-5 mr-2" />
-                  <a href="http://www.ofppt.ma/" className="text-sm hover:text-white transition-colors">Ofppt.ma</a>
+                  <Link to="http://www.ofppt.ma/" className="text-sm hover:text-white transition-colors">Ofppt.ma</Link>
                 </div>
               </div>
             </div>
@@ -66,15 +66,15 @@ export default function Footer() {
                 © {new Date().getFullYear()} ISTA NTIC Beni Mellal. Tous droits réservés.
               </p>
               <div className="flex space-x-4 mt-4 md:mt-0">
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                <Link to="#" className="text-gray-400 hover:text-white transition-colors">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-facebook-icon lucide-facebook"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-                </a>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                </Link>
+                <Link to="#" className="text-gray-400 hover:text-white transition-colors">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-twitter-icon lucide-twitter"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg>
-                </a>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                </Link>
+                <Link to="#" className="text-gray-400 hover:text-white transition-colors">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-linkedin-icon lucide-linkedin"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
-                </a>
+                </Link>
               </div>
             </div>
           </div>

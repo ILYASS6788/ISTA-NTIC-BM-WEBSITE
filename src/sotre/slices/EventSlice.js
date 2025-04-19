@@ -1,51 +1,55 @@
 
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-export const addEvents = createAsyncThunk('events/addEvents',async ({ urlApi, eventInfo}, { rejectWithValue }) => {
+export const fetchEvents = createAsyncThunk('events/fetchEvents',async ({ urlApi, eventInfo}, { rejectWithValue }) => {
+
+
     try {
         const method = eventInfo ? 'POST' : 'GET' ;
         
-        // if(method === 'POST'){
-        //   await csrfCookie();
-        // }
+        
         const headers =eventInfo ? {
             "Accept": "application/json",
             ...(eventInfo && { "Content-Type": "application/json" }),
-            // "X-XSRF-TOKEN": getCookie("XSRF-TOKEN")
+            ...(token ? {'Authorization': `Bearer ${localStorage.getItem('auth_token')}`} 
+                : {})
             } : {};
         const res = await fetch(`http://localhost:8000/api/${urlApi}`, {
             method: method,
-            credentials: "include",
             headers: headers,
             body: eventInfo ? JSON.stringify(eventInfo) : null
         });
         if (!res.ok) {
             const status = res.status;
             const error = await res.json();
-            let errorMsg = "Une erreur est survenue lors de la gestion de l événements";
+            
+            let errorMsg = "Une erreur est survenue lors de la gestion de l'evenements";
+          
+            if ([500, 502, 503].includes(status)) {
 
-            if (status === 500 || status === 502 || status === 503) {
-
-                errorMsg = "Erreur du serveur, impossible de gérer l'événement pour le moment. Veuillez réessayer plus tard.";
-            } else if (status === 401 || status === 422) {
-                
-                errorMsg = "Echec de l'authentification. Vous devez etre connecte pour effectuer cette action";
-                return rejectWithValue(error.message || errorMsg);
-            } else if (status === 419) {
-                errorMsg = "Session expirée. Veuillez vous reconnecter pour continuer.";
-            } else {
-                errorMsg = `une erreur inconnue s'est produite avec le statut ${status}.`;
-            }
-            return rejectWithValue(errorMsg);
-        }
+                errorMsg = "Erreur du serveur, impossible de gerer l'evenement pour le moment. Veuillez reessayer plus tard.";
+              } 
+              else 
+                if ([401, 422].includes(status)) 
+                    {
+                errorMsg = "Echec de l'authentification. Vous devez être connecte pour effectuer cette action.";
+              } else if 
+              (status === 419) {
+                errorMsg = "Session expiree. Veuillez vous reconnecter pour continuer.";
+              } else {
+                errorMsg = `Une erreur inconnue s'est produite. Veuillez reessayer plus tard.`;
+              }
+          
+            return rejectWithValue(error.message || errorMsg);
+          }
         
         const data = await res.json();
         console.log(data.events)
-        return data.events;
+        return {data, method};
     }
     catch (err) { 
         console.log(err)
-        return rejectWithValue("Échec de l'authentification, veuillez réessayer."); 
+        return rejectWithValue("echec de l'authentification, veuillez reessayer."); 
     }
 })
 
@@ -55,26 +59,31 @@ const EventsSlice = createSlice({
         events: [], 
         success: false,
         error: null,
-    },
-    reducer:{
-        AddNewevent : (state,action)=>{
-            return [
-                ...state,action.payload
-            ]
-        }
+        loading:false
     },
     extraReducers: (builder) => {
         builder
-            .addCase(addEvents.pending, (state) => {
+            .addCase(fetchEvents.pending, (state) => {
                 state.loading = true;
                 state.error = null;
             })
-            .addCase(addEvents.fulfilled, (state, action) => {
+            .addCase(fetchEvents.fulfilled, (state, action) => {
                 state.loading = false;
-                state.events = action.payload;
+                const {method,data} = action.payload
+                if(method === 'POST'){
+                    const exist = state.events.some(e=>e.id === data.event.id)
+                    if(!exist &&   data.event){
+                        state.events.push(data.event)
+                    }
+                }
+                else if(method === 'GET'){
+
+                    state.events = action.payload.data.events;
+                }
+                
 
             })
-            .addCase(addEvents.rejected, (state, action) => {
+            .addCase(fetchEvents.rejected, (state, action) => {
                 state.loading = false;
                 state.events = [];
                 state.error = action.payload;

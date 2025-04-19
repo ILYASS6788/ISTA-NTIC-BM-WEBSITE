@@ -43,12 +43,12 @@ export default function EventCarousel({ events }) {
         className="absolute inset-0 flex transition-transform duration-500 ease-in-out"
         style={{ transform: `translateX(-${currentIndex * 100}%)` }}
       >
-        {events.map((event, index) => (
+        {events.map((event) => (
           <div
             key={event.id}
             className="relative w-full h-full flex-shrink-0"
             style={{
-              backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(https://source.unsplash.com/1600x900/?education,university&sig=${index})`,
+              backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url()`,
               backgroundSize: 'cover',
               backgroundPosition: 'center',
             }}
