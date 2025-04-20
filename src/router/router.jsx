@@ -17,6 +17,8 @@ import EventDasboard from "../pages/Dashboard Components/EventDasboard";
 import ShedulesDashboard from "../pages/Dashboard Components/ShedulesDashboard";
 import LessonDashboard from "../pages/Dashboard Components/LessonDashboard";
 import AddCourseForm from "../pages/addLesson";
+import Apropos from "../components/Apropos";
+import EventDetails from "../pages/EventDetails";
 
 
 const router = createBrowserRouter([
@@ -37,12 +39,20 @@ const router = createBrowserRouter([
         element: <EventsPage />,
       },
       {
+        path:'/events/:id',
+        element:<EventDetails />
+      },
+      {
         path: "/courses",
         element: <LessonsPage />,
       },
       {
         path: "/contact-nous",
         element: <Contact />,
+      },
+      {
+        path: "/About-us" || "/presentaion",
+        element: <Apropos />,
       },
       {
         path: "/dashboard",

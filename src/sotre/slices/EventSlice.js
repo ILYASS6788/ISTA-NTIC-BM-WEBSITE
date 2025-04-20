@@ -1,23 +1,25 @@
 
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-export const fetchEvents = createAsyncThunk('events/fetchEvents',async ({ urlApi, eventInfo}, { rejectWithValue }) => {
+export const fetchEvents = createAsyncThunk('events/fetchEvents',async ({ urlApi, eventInfo ,methodHTTP}, { rejectWithValue }) => {
 
 
     try {
-        const method = eventInfo ? 'POST' : 'GET' ;
+        const method = methodHTTP ;
         
         
         const headers =eventInfo ? {
             "Accept": "application/json",
-            ...(eventInfo && { "Content-Type": "application/json" }),
-            ...(token ? {'Authorization': `Bearer ${localStorage.getItem('auth_token')}`} 
+             ...((method ==='PUT' || method === 'DELETE') 
+                    &&  { "Content-Type": "application/json" }),
+            ...(method ==='POST' ? 
+                {'Authorization': `Bearer ${localStorage.getItem('auth_token')}`} 
                 : {})
             } : {};
         const res = await fetch(`http://localhost:8000/api/${urlApi}`, {
             method: method,
             headers: headers,
-            body: eventInfo ? JSON.stringify(eventInfo) : null
+            body: eventInfo ? eventInfo : null
         });
         if (!res.ok) {
             const status = res.status;
@@ -57,7 +59,6 @@ const EventsSlice = createSlice({
     name: "EventsData",
     initialState: {
         events: [], 
-        success: false,
         error: null,
         loading:false
     },
@@ -70,17 +71,25 @@ const EventsSlice = createSlice({
             .addCase(fetchEvents.fulfilled, (state, action) => {
                 state.loading = false;
                 const {method,data} = action.payload
-                if(method === 'POST'){
+                
+                if(method === 'POST' &&  data.event){
                     const exist = state.events.some(e=>e.id === data.event.id)
-                    if(!exist &&   data.event){
+                    if(!exist){
                         state.events.push(data.event)
+                        
                     }
                 }
                 else if(method === 'GET'){
-
+                    
                     state.events = action.payload.data.events;
                 }
                 
+                else if (method === 'DELETE') {
+                    const deletedId = data.event?.id || data.id;
+                    if (deletedId) {
+                        state.events = state.events.filter(e => e.id !== deletedId);
+                    }
+                }
 
             })
             .addCase(fetchEvents.rejected, (state, action) => {

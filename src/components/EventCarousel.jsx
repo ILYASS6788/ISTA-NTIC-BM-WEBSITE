@@ -1,5 +1,18 @@
 import { useState , useRef, useEffect} from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ButtonVisit } from '../pages/EventsPage';
+function ArrowBtn({onClick,direction}){
+  return( 
+  <button
+    onClick={onClick}
+    className={`group absolute ${direction==='right' ? 'right-4' : 'left-4' } top-1/2 -translate-y-1/2 bg-yellow-100 hover:bg-yellow-400 border-2 border-amber-300 rounded-full px-2 py-4 backdrop-blur-sm transition-all`}
+  >
+    {direction === 'right' ? 
+      (<ChevronRight className="h-6 w-6 text-yellow-400 group-hover:text-white" />)
+    : (<ChevronLeft className="h-6 w-6 text-yellow-400 group-hover:text-white" />)}
+  </button>
+  )
+}
 
 export default function EventCarousel({ events }) {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -36,6 +49,11 @@ export default function EventCarousel({ events }) {
     startAutoSlide();
   };
 
+  function handleEventIamge(image){
+     return image ? `${import.meta.env.VITE_WEB_URL}/storage/${image}` : ('./back-up/ista-ntic-bm.jpg' || './back-up/default-event.jpg') ;
+  }
+
+
 
   return (
     <div className="relative w-full h-[85svh] overflow-hidden rounded-xl">
@@ -46,36 +64,25 @@ export default function EventCarousel({ events }) {
         {events.map((event) => (
           <div
             key={event.id}
-            className="relative w-full h-full flex-shrink-0"
+            className="relative w-full h-full flex-shrink-0 bg-gradient-to-b from-black/95 via-transparent to-transparent"
             style={{
-              backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url()`,
+              backgroundImage: `url(${handleEventIamge(event.image)})`,
               backgroundSize: 'cover',
               backgroundPosition: 'center',
             }}
           >
-            <div className="absolute inset-0 flex flex-col justify-center items-center text-white p-8">
-              <h2 className="text-4xl font-bold mb-4">{event.title}</h2>
-              <p className="text-xl mb-2">{event.date}</p>
-              <p className="text-lg mb-4">{event.location}</p>
-              <p className="text-center max-w-2xl">{event.description}</p>
+            <div className="absolute inset-0 flex flex-col justify-center items-center text-white p-8 bg-gradient-to-t from-black/95 via-transparent to-transparent ">
+              <h2 className="text-amber-500 text-2xl md:text-[5rem] font-bold mb-4">{event.title}</h2>
+              <p className="text-amber-300 text-xl md:text-4xl mb-2 font-bold">{event.date}</p>
+              <p className="text-amber-200 text-xl mt-4">{event.location}</p>
+              <ButtonVisit GOto={`/events/${event.id}`} />
             </div>
           </div>
         ))}
       </div>
 
-      <button
-        onClick={prevSlide}
-        className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/30 hover:bg-white/50 rounded-full p-2 backdrop-blur-sm transition-all"
-      >
-        <ChevronLeft className="h-6 w-6 text-white" />
-      </button>
-
-      <button
-        onClick={nextSlide}
-        className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/30 hover:bg-white/50 rounded-full p-2 backdrop-blur-sm transition-all"
-      >
-        <ChevronRight className="h-6 w-6 text-white" />
-      </button>
+      <ArrowBtn  onClick={prevSlide} direction={'left'} />
+      <ArrowBtn  onClick={nextSlide} direction={'right'} />
 
       <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">
         {events.map((_, index) => (

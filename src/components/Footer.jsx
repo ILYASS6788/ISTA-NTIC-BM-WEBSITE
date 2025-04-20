@@ -20,9 +20,9 @@ export default function Footer() {
               <h3 className="text-lg font-semibold mb-4 uppercase">Navigation</h3>
               <ul className="space-y-2">
                 <li><Link to="/" className="text-gray-400 hover:text-white transition-colors">Accueil</Link></li>
-                <li><Link to="/presentation" className="text-gray-400 hover:text-white transition-colors">Présentation</Link></li>
+                <li><Link to="/About-us" className="text-gray-400 hover:text-white transition-colors">Présentation</Link></li>
                 <li><Link to="events" className="text-gray-400 hover:text-white transition-colors">Nos événements</Link></li>
-                <li><Link to="/courses" className="text-gray-400 hover:text-white transition-colors">cours offerts</Link></li>
+                <li><Link to="/courses" className="text-gray-400 hover:text-white transition-colors">Cours offerts</Link></li>
               </ul>
             </div>
 

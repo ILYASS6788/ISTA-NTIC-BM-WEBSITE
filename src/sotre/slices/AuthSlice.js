@@ -31,7 +31,7 @@ export const loginUser = createAsyncThunk(
     
 
       token ? localStorage.setItem("auth_token",token) : localStorage.setItem("auth_token",data.token);
-
+      console.log(data)
       return data;
     } catch (err) {
       
@@ -96,7 +96,7 @@ const userAuthSlice = createSlice({
         state.loading = false;
         state.user = action.payload.user;
         state.token = localStorage.getItem('auth_token');
-        state.role = action.payload.role || 'user';
+        state.role = action.payload.user.role;
         console.log(state.token)
       })
       .addCase(loginUser.rejected, (state, action) => {

@@ -8,8 +8,12 @@ export default function Navigation({setIsLogOut}) {
   const [isOpen, setIsOpen] = useState(false);
   const {role,user}= useSelector((state)=>state.authUser)
   const location = useLocation();
+  
 
-  const isAdmin = true;
+
+  console.log(role)
+
+  const isAdmin = role === 'admin';
 
   const navItems = [
     { path: '/', label: 'Home', icon: Calendar },
@@ -39,20 +43,23 @@ export default function Navigation({setIsLogOut}) {
 
         {location.pathname !== loginNav.path && (
           <div className={`flex items-center  md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse`}>
-          {user ? (<UserAvatar user={user} setIsLogOut={setIsLogOut} />) :
+          {user && role === 'user' ? (
+          <UserAvatar user={user} setIsLogOut={setIsLogOut} />
+        ) : !user && !role ? (
           <NavLink
-          to={loginNav.path}
-          className="flex items-center gap-2 p-3 md:px-6 py-2 text-sm md:text-[18px] font-bold text-blue-600 bg-white rounded-lg 
-           border-t-2 border-l-2 border-b-2 border-r-2 
-           border-t-white border-l-white border-b-blue-600 border-r-blue-600 
-           transition-all duration-1000 
-           hover:border-t-blue-600 hover:border-l-blue-600 
-           hover:border-b-sky-400 hover:border-r-sky-400 
-           hover:shadow-[5px_5px_rgba(59,130,246,0.4),10px_10px_rgba(59,130,246,0.3),15px_15px_rgba(59,130,246,0.2)]"
-        >
-          <span>{loginNav.label}</span>
-          <loginNav.icon className="w-5 md:w-8 h-5 md:h-8" />
-        </NavLink>}
+            to={loginNav.path}
+            className="flex items-center gap-2 p-3 md:px-6 py-2 text-sm md:text-[18px] font-bold text-blue-600 bg-white rounded-lg 
+              border-t-2 border-l-2 border-b-2 border-r-2 
+              border-t-white border-l-white border-b-blue-600 border-r-blue-600 
+              transition-all duration-1000 
+              hover:border-t-blue-600 hover:border-l-blue-600 
+              hover:border-b-sky-400 hover:border-r-sky-400 
+              hover:shadow-[5px_5px_rgba(59,130,246,0.4),10px_10px_rgba(59,130,246,0.3),15px_15px_rgba(59,130,246,0.2)]"
+          >
+            <span>{loginNav.label}</span>
+            {loginNav.icon && <loginNav.icon className="w-5 md:w-8 h-5 md:h-8" />}
+          </NavLink>
+        ) : null}
 
           {/* Hamburger Button for Mobile */}
           <button
