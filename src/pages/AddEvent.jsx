@@ -2,42 +2,82 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import GoBackBtn from "../components/GoBackBtn";
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchEvents } from "../sotre/slices/EventSlice";
+import Loader from "../Loader";
+import ErrorAlert from "../components/ErrorAlert";
 
 export default function AddEventPage() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [errorsForm, setErrorsForm] = useState({})
+  const {loading,error} = useSelector((state=>state.EventsData))
   const [event, setEvent] = useState({
     title: "",
     description: "",
+    details: "",
     date: "",
     time: "",
     location: "",
+    image:null
   });
 
   const handleChange = (e) => {
-    setEvent({ ...event, [e.target.name]: e.target.value });
+    const {name,value,files} = e.target;
+    setEvent({ ...event,
+       [name]: files ? files[0] : value});
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const formData = new FormData();
+    formData.append("title", event.title);
+    formData.append("description", event.description);
+    formData.append("details", event.details);
+    formData.append("date", event.date);
+    formData.append("time", event.time);
+    formData.append("location", event.location);
+    formData.append("image", event.image);
     
-    setEvent({
-      title: "",
-      description: "",
-      date: "",
-      time: "",
-      location: "",
-      image: "",
-    });
+      const res = await dispatch(fetchEvents({ 
+        urlApi: 'adminOnly/addnewEvent',
+        eventInfo:formData,
+        methodHTTP:'POST'
+      }))
+      console.log(res);
+      if (res.payload.data.errors) {
+        setErrorsForm(res.payload.data.errors);
+      } else if (res.payload.data.success) {
+       
+        setEvent({
+          title: "",
+          description: "",
+          details: "",
+          date: "",
+          time: "",
+          location: "",
+          image: null
+        });
+        navigate(-1);
+      }
+    
+    
   };
 
   return (
     <div className="min-h-fit bg-gey-50 w-fulll py-4 px-2 sm:py-6 sm:px-4 md:py-8 md:px-6 lg:px-8">
+      
+      <ErrorAlert message={errorsForm.alert} onClose={()=>setErrorsForm({})} />
+     
       <div>
       <GoBackBtn />
 
       </div>
-  <div className="w-full max-w-3xl mx-auto">
+  <div className="w-full max-w-3xl mx-auto relative">
+  {loading ? <Loader /> :
     <form
+      encType="multipart/form-data"
       onSubmit={handleSubmit}
       className="bg-white shadow-xl rounded-lg sm:rounded-xl md:rounded-2xl p-4 sm:p-6 md:p-8"
     >
@@ -62,6 +102,9 @@ export default function AddEventPage() {
             className="mt-1 block w-full px-3 py-2 sm:px-4 sm:py-3 text-sm sm:text-base bg-gray-50 border border-gray-300 rounded-md sm:rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
             placeholder="Enter event title"
           />
+          {errorsForm.title && (
+    <p className="text-red-500 text-sm mt-2">{errorsForm.title}</p>
+  )}
         </div>
 
         {/* Date and Time */}
@@ -75,6 +118,9 @@ export default function AddEventPage() {
               value={event.date}
               className="mt-1 block w-full px-3 py-2 sm:px-4 sm:py-3 text-sm sm:text-base bg-gray-50 border border-gray-300 rounded-md sm:rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
             />
+            {errorsForm.date && (
+    <p className="text-red-500 text-sm mt-2">{errorsForm.date}</p>
+  )}
           </div>
           <div>
             <label className="text-sm font-medium text-gray-700">Time</label>
@@ -85,6 +131,9 @@ export default function AddEventPage() {
               value={event.time}
               className="mt-1 block w-full px-3 py-2 sm:px-4 sm:py-3 text-sm sm:text-base bg-gray-50 border border-gray-300 rounded-md sm:rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
             />
+            {errorsForm.time && (
+    <p className="text-red-500 text-sm mt-2">{errorsForm.time}</p>
+  )}
           </div>
         </div>
 
@@ -100,6 +149,9 @@ export default function AddEventPage() {
             placeholder="Enter event location"
           />
         </div>
+        {errorsForm.location && (
+    <p className="text-red-500 text-sm mt-2">{errorsForm.location}</p>
+  )}
 
         {/* Description */}
         <div>
@@ -112,6 +164,24 @@ export default function AddEventPage() {
             className="mt-1 block w-full px-3 py-2 sm:px-4 sm:py-3 text-sm sm:text-base bg-gray-50 border border-gray-300 rounded-md sm:rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 resize-none"
             placeholder="Describe your event..."
           ></textarea>
+          {errorsForm.description && (
+    <p className="text-red-500 text-sm mt-2">{errorsForm.description}</p>
+  )}
+        </div>
+        {/* Details */}
+        <div>
+          <label className="text-sm font-medium text-gray-700">Details</label>
+          <textarea
+            name="details"
+            onChange={handleChange}
+            value={event.details}
+            rows="4"
+            className="mt-1 block w-full px-3 py-2 sm:px-4 sm:py-3 text-sm sm:text-base bg-gray-50 border border-gray-300 rounded-md sm:rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 resize-none"
+            placeholder="Detail your event..."
+          ></textarea>
+          {errorsForm.details && (
+    <p className="text-red-500 text-sm mt-2">{errorsForm.details}</p>
+  )}
         </div>
 
         {/* Image Upload */}
@@ -146,6 +216,9 @@ export default function AddEventPage() {
                 <p className="text-gray-500">or drag and drop</p>
               </div>
               <p className="text-xs text-gray-500">PNG, JPG,... 10MB</p>
+              {errorsForm.image && (
+    <p className="text-red-500 text-sm mt-2">{errorsForm.image[0]}</p>
+  )}
             </div>
           </div>
         </div>
@@ -167,7 +240,7 @@ export default function AddEventPage() {
           Cancel
         </button>
       </div>
-    </form>
+    </form>}
   </div>
 </div>
 

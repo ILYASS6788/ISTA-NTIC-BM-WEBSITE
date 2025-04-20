@@ -5,6 +5,11 @@
   font-weight: 500;
   font-style: normal;
 }
+.prompt-bold {
+  font-family: "Prompt", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
   .contact
   {
     background-image: url('../public/contact-bg.svg');
