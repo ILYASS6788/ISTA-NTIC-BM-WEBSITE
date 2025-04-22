@@ -7,7 +7,7 @@ export default function UserAvatar({ user , setIsLogOut}) {
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useDispatch();
   const dropUser = useRef(null);
-  const handleLogOut = async ()=>{
+   const handleLogOut = async ()=>{
     setIsLogOut(true)
     await dispatch(logoutUser())
     setTimeout(()=>{
@@ -40,10 +40,10 @@ export default function UserAvatar({ user , setIsLogOut}) {
         <div className="absolute right-0 mt-2 z-99 bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-52 border-blue-500 border-1">
           <div className="px-4 py-3 text-sm text-gray-900 dark:text-white">
             <div className="font-medium truncate text-gray-900 text-lg">
-              {user?.name || "Unknown User"}
+              {user?.name }
             </div>
             <div className="text-xs text-gray-500 dark:text-gray-400">
-              {user?.email || "no-email@example.com"}
+              {user?.email }
             </div>
           </div>
           <div className="py-2">

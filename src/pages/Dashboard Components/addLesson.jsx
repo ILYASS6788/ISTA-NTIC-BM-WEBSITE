@@ -1,7 +1,7 @@
 import { File } from 'lucide-react';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import GoBackBtn from '../components/GoBackBtn';
+import GoBackBtn from '../../components/GoBackBtn';
 export default function AddCourseForm  ()  {
   const [materials, setMaterials] = useState([]);
   const navigate = useNavigate();

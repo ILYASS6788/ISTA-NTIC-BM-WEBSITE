@@ -10,16 +10,14 @@ export const fetchEvents = createAsyncThunk('events/fetchEvents',async ({ urlApi
         
         const headers =eventInfo ? {
             "Accept": "application/json",
-             ...((method ==='PUT' || method === 'DELETE') 
-                    &&  { "Content-Type": "application/json" }),
-            ...(method ==='POST' ? 
+            ...((method ==='POST' || method ==='PUT') ? 
                 {'Authorization': `Bearer ${localStorage.getItem('auth_token')}`} 
                 : {})
             } : {};
         const res = await fetch(`http://localhost:8000/api/${urlApi}`, {
             method: method,
             headers: headers,
-            body: eventInfo ? eventInfo : null
+            ...(method === 'POST' || method === 'PUT' ? { body: eventInfo } : {})
         });
         if (!res.ok) {
             const status = res.status;
@@ -60,8 +58,18 @@ const EventsSlice = createSlice({
     initialState: {
         events: [], 
         error: null,
-        loading:false
+        loading:false,
+        visible:false
     },
+    reducers:{
+        DeleteEvent :(state,action)=>{
+            const deletedId = action.payload.id;
+            if (deletedId) {
+                state.events = state.events.filter(e => e.id !== deletedId);
+            }
+        }
+    }
+    ,
     extraReducers: (builder) => {
         builder
             .addCase(fetchEvents.pending, (state) => {
@@ -83,12 +91,9 @@ const EventsSlice = createSlice({
                     
                     state.events = action.payload.data.events;
                 }
-                
-                else if (method === 'DELETE') {
-                    const deletedId = data.event?.id || data.id;
-                    if (deletedId) {
-                        state.events = state.events.filter(e => e.id !== deletedId);
-                    }
+                else if(method === 'PUT'){
+                    
+                    state.events = action.payload.data.events;
                 }
 
             })
@@ -99,4 +104,5 @@ const EventsSlice = createSlice({
             })
     },
 });
+export const { DeleteEvent} = EventsSlice.actions
 export default EventsSlice.reducer;

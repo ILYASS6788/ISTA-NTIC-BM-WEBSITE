@@ -11,8 +11,6 @@ export default function Navigation({setIsLogOut}) {
   
 
 
-  console.log(role)
-
   const isAdmin = role === 'admin';
 
   const navItems = [
@@ -31,7 +29,7 @@ export default function Navigation({setIsLogOut}) {
         {/* Logo Section */}
         <NavLink
           to="/"
-          className="flex items-center justify-center space-x-3 rtl:space-x-reverse"
+          className="max-sm:ml-16 flex items-center justify-center space-x-3 rtl:space-x-reverse"
         >
           <img src="/OFPPT.png" className="h-12" alt="Ofppt Logo" />
           <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">

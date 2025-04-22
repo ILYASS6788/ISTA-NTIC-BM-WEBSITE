@@ -11,14 +11,14 @@ import App from "../App";
 import Login from "../pages/Login";
 import Entrer from "../pages/Entrer"; 
 import Contact from "../pages/Contact";
-import AddEventPage from "../pages/AddEvent";
-import AddSchedulePage from "../pages/addSchedule";
 import EventDasboard from "../pages/Dashboard Components/EventDasboard";
 import ShedulesDashboard from "../pages/Dashboard Components/ShedulesDashboard";
 import LessonDashboard from "../pages/Dashboard Components/LessonDashboard";
-import AddCourseForm from "../pages/addLesson";
+import AddCourseForm from "../pages/Dashboard Components/addLesson";
 import Apropos from "../components/Apropos";
 import EventDetails from "../pages/EventDetails";
+import AddSchedulePage from "../pages/Dashboard Components/addSchedule";
+import AddEventPage from "../pages/Dashboard Components/AddEvent";
 
 
 const router = createBrowserRouter([

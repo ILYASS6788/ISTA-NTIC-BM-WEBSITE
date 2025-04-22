@@ -18,7 +18,7 @@ function App() {
       await dispatch(fetchEvents({ urlApi: "getevents", methodHTTP:'GET' }));
     }
     fetchData();
-  });
+  },[]);
   const [isLogOut,setIsLogOut]=useState(false);
 
   if(isLogOut){
