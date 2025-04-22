@@ -67,7 +67,7 @@ export default function Apropos() {
         transition={{ duration: 0.6, ease: "easeOut" }}
         viewport={{ once: false }}
       >
-        <p className="text-yellow-300 text-[30px] underline font-medium px-0 py-2.5">
+        <p className="text-yellow-300 text-md underline font-medium px-0 py-2.5">
           A propos de
         </p>
       </motion.div>

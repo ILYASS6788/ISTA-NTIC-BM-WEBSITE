@@ -38,81 +38,77 @@ const EventDetails = () => {
     <div>
       {event ? (
         <div className="min-h-screen bg-gray-50">
-          {/* Hero Section */}
-          <div className="relative h-96">
-            <img
-              src={`${
-                        import.meta.env.VITE_WEB_URL
-                      }/storage/${event.image}`}
-              alt={event.title}
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-            <div className="absolute w-fit top-4 left-4">
-              <GoBackBtn />
-            </div>
+
+        <div className="relative h-[50vh] sm:h-[60vh] md:h-96">
+          <img
+            src={`${import.meta.env.VITE_WEB_URL}/storage/${event.image}`}
+            alt={event.title}
+            className="w-full h-full object-cover object-center sm:object-top"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+          <div className="absolute w-fit top-4 left-4">
+            <GoBackBtn />
           </div>
-
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 -mt-32 relative z-10">
-            <div className="bg-white rounded-xl shadow-xl p-8">
-              <div className="mb-8">
-                <h1 className="text-3xl font-bold text-gray-900 mb-4">
-                  {event.title}
-                </h1>
-                <div className="flex flex-wrap gap-6 text-gray-600">
-                  <div className="flex items-center text-gray-600">
-                    <Calendar className="w-5 h-5 mr-3 text-blue-600" />
-                    <span>{event.date}</span>
-                  </div>
-                  <div className="flex items-center text-gray-600">
-                    <MapPin className="w-5 h-5 mr-3 text-blue-600" />
-                    <span>{event.location}</span>
-                  </div>
-                  <div className="flex items-center text-gray-600">
-                    <Clock className="w-5 h-5 mr-3 text-blue-600" />
-                    <span>{event.time}</span>
-                  </div>
+        </div>
+      
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 -mt-32 relative z-10">
+          <div className="bg-white rounded-xl shadow-xl p-6 sm:p-8">
+           
+            <div className="mb-8">
+              <h1 className="text-3xl font-bold text-gray-900 mb-4">{event.title}</h1>
+              <div className="flex flex-wrap gap-6 text-gray-600">
+                <div className="flex items-center">
+                  <Calendar className="w-5 h-5 mr-2 text-blue-600" />
+                  <span>{event.date}</span>
+                </div>
+                <div className="flex items-center">
+                  <MapPin className="w-5 h-5 mr-2 text-blue-600" />
+                  <span>{event.location}</span>
+                </div>
+                <div className="flex items-center">
+                  <Clock className="w-5 h-5 mr-2 text-blue-600" />
+                  <span>{event.time}</span>
                 </div>
               </div>
-
-              <div className="prose max-w-none mb-8">
-                <p className="text-gray-600 text-lg mb-4">
-                  {event.description}
-                </p>
+            </div>
+      
+            {/* Description */}
+            <div className="prose max-w-none mb-8">
+              <p className="text-gray-600 text-lg mb-4">{event.description}</p>
+            </div>
+      
+            {/* Image & Details Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+              <div className="rounded-xl overflow-hidden">
+                <img
+                  src={`${import.meta.env.VITE_WEB_URL}/storage/${event.image}`}
+                  alt={event.title}
+                  className="w-full h-64 sm:h-72 md:h-full object-cover object-center sm:object-top"
+                />
               </div>
-              <div className="grid md:grid-cols-2 gap-8 mb-8">
-                <div className="rounded-xl overflow-hidden">
-                  <img
-                    src={`${
-                        import.meta.env.VITE_WEB_URL
-                      }/storage/${event.image}`}
-                    alt={event.title}
-                    className="w-full h-full object-cover"
-                  />
+              <div>
+                <div className="text-orange-500 text-sm font-medium mb-2">
+                  <Text size={25} className="inline mr-2" />
+                  Détails de l'événement
                 </div>
-                <div>
-                  <div className="text-orange-500 text-sm font-medium mb-2">
-                    <Text size={25} className="inline mr-4" />
-                    Détails de l'événement
-                  </div>
-                  <p className="text-gray-800 font-medium mb-6">
-                    {event.details}
-                  </p>
-                </div>
+               
+               <p className="text-gray-800 font-medium mb-6 wrap-break-word">{event.details}</p>
+               
               </div>
-
-              <div className="flex flex-col sm:flex-row gap-4 justify-between items-center bg-gray-50 rounded-lg p-6">
-                <div>
-                  <h3 className="font-semibold text-gray-900 mb-1">
-                    Partagez cet événement
-                  </h3>
-                  <p className="text-sm text-gray-600">Invitez vos amis.</p>
-                </div>
-                <ShareBtn eventTOShare={event} />
+            </div>
+      
+            {/* Share Section */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-between items-center bg-gray-50 rounded-lg p-6">
+              <div>
+                <h3 className="font-semibold text-gray-900 mb-1">Partagez cet événement</h3>
+                <p className="text-sm text-gray-600">Invitez vos amis.</p>
               </div>
+              <ShareBtn eventTOShare={event} />
             </div>
           </div>
         </div>
+      </div>
+      
       ) : (
         <EventNotFound />
       )}
