@@ -63,7 +63,7 @@ export default function EventsPage() {
 
                     <p className="text-gray-600 mb-4 text-sm">
                       {event.description.length > 155
-                        ? `${event.description.slice(0, 155)}...`
+                        ? `${event.description.slice(0, 105)}...`
                         : event.description}
                     </p>
 

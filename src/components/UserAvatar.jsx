@@ -33,7 +33,12 @@ export default function UserAvatar({ user , setIsLogOut}) {
         className="text-white px-3 py-1.5 rounded-full flex items-center justify-center gap-2 hover:bg-[#0e131e] focus:ring-1 focus:ring-bg-[#0e131e]"
       >
         <span className="hidden md:inline ">{user.name}</span>
-        <UserCircle className="w-8 h-8" />
+        <img
+                className="inline-block shrink-0 w-10 h-10 rounded-full object-cover border border-white"
+                referrerPolicy="no-referrer" 
+                src={user.client_avatar ? user.client_avatar : 'https://avatar.iran.liara.run/public/boy?username=Ash'}
+                alt="Avatar"
+              />
       </button>
 
       {isOpen && (

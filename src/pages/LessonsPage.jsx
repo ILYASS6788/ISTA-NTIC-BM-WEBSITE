@@ -2,21 +2,77 @@ import { useState } from 'react';
 import { Search, Book, Download, Filter } from 'lucide-react';
 
 
+const mockLessons = [
+  {
+    id: 1,
+    title: "Introduction to Web Development",
+    subject: "Web",
+    instructor: "Mr. Ayoub",
+    class: "2nd Year - Web",
+    materials: [
+      "HTML_Basics.pdf",
+      "CSS_Layout_Tutorial.pdf",
+      "JavaScript_Essentials.pdf"
+    ]
+  },
+  {
+    id: 2,
+    title: "Database Fundamentals",
+    subject: "Database",
+    instructor: "Mrs. Lamia",
+    class: "1st Year - Dev",
+    materials: [
+      "SQL_Queries.pdf",
+      "ER_Diagrams_Guide.pdf"
+    ]
+  },
+  {
+    id: 3,
+    title: "Laravel API Development",
+    subject: "Back-end",
+    instructor: "Mr. Yassine",
+    class: "2nd Year - Fullstack",
+    materials: [
+      "Laravel_Controllers.pdf",
+      "REST_API_Guide.pdf"
+    ]
+  },
+  {
+    id: 4,
+    title: "React State Management",
+    subject: "Front-end",
+    instructor: "Miss Salma",
+    class: "2nd Year - Web",
+    materials: [
+      "React_UseState_Hook.pdf",
+      "Redux_Toolkit_Basics.pdf"
+    ]
+  },
+  {
+    id: 5,
+    title: "Networking Basics",
+    subject: "Networking",
+    instructor: "Mr. Hamza",
+    class: "1st Year - General",
+    materials: [
+      "IP_Addresses_and_Subnetting.pdf",
+      "OSI_Model_Explained.pdf"
+    ]
+  }
+];
 
 export default function LessonsPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedSubject, setSelectedSubject] = useState('all');
-  const [selectedInstructor, setSelectedInstructor] = useState('all');
 
   const subjects = ['all', ...new Set(mockLessons.map(lesson => lesson.subject))];
-  const instructors = ['all', ...new Set(mockLessons.map(lesson => lesson.instructor))];
+  
 
   const filteredLessons = mockLessons.filter(lesson => {
-    const matchesSearch = lesson.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         lesson.instructor.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesSearch = lesson.title.toLowerCase().includes(searchTerm.toLowerCase()) ;
     const matchesSubject = selectedSubject === 'all' || lesson.subject === selectedSubject;
-    const matchesInstructor = selectedInstructor === 'all' || lesson.instructor === selectedInstructor;
-    return matchesSearch && matchesSubject && matchesInstructor;
+    
+    return matchesSearch && matchesSubject ;
   });
 
   return (
@@ -44,28 +100,14 @@ export default function LessonsPage() {
                 onChange={(e) => setSelectedSubject(e.target.value)}
                 className="pl-10 w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
               >
-                {subjects.map(subject => (
+                {subjects.map(subject => 
                   <option key={subject} value={subject}>
                     {subject === 'all' ? 'All Subjects' : subject}
                   </option>
-                ))}
+                )}
               </select>
             </div>
 
-            <div className="relative">
-              <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
-              <select
-                value={selectedInstructor}
-                onChange={(e) => setSelectedInstructor(e.target.value)}
-                className="pl-10 w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
-              >
-                {instructors.map(instructor => (
-                  <option key={instructor} value={instructor}>
-                    {instructor === 'all' ? 'All Instructors' : instructor}
-                  </option>
-                ))}
-              </select>
-            </div>
           </div>
         </div>
 

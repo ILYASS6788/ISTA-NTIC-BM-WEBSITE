@@ -58,8 +58,8 @@ export default function DashboardPage() {
   return (
     <div className="flex flex-col gap-2 w-fit text-[10px] sm:text-xs z-50 absolute bottom-5 right-2">
         <motion.div
-          className={`succsess-alert cursor-default border-2 flex items-center justify-between w-full h-12 sm:h-14 rounded-lg bg-white shadow-2xl
-             ${success ? 'shadow-cyan-300' : 'shadow-red-300 border-red-400'} px-[10px]`}
+          className={`succsess-alert cursor-default flex items-center justify-between w-full h-12 sm:h-14 rounded-lg bg-white shadow-2xl
+             ${success ? 'shadow-green-300' : 'shadow-red-300 border-red-400'} px-[10px]`}
           initial={{ x: -200, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           exit={{ delay:0.8,x: -200, opacity: 0 }}

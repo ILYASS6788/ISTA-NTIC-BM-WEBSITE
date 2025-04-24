@@ -59,7 +59,6 @@ const EventsSlice = createSlice({
         events: [], 
         error: null,
         loading:false,
-        visible:false
     },
     reducers:{
         DeleteEvent :(state,action)=>{

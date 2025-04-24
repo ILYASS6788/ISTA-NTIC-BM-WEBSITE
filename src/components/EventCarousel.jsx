@@ -73,7 +73,7 @@ export default function EventCarousel({ events }) {
           >
             <div className="absolute inset-0 flex flex-col justify-center items-center text-white p-8 bg-gradient-to-t from-black/95 via-transparent to-transparent ">
               <h2 className="text-amber-500 text-2xl md:text-[5rem] font-bold mb-4">{event.title}</h2>
-              <p className="text-amber-300 text-xl md:text-4xl mb-2 font-bold">{event.date}</p>
+              <p className="text-amber-300 text-xl md:text-4xl mb-2 font-bold">{event.formated_date}</p>
               <p className="text-amber-200 text-xl mt-4">{event.location}</p>
               <ButtonVisit GOto={`/events/${event.id}`} />
             </div>

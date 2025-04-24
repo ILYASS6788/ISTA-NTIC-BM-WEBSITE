@@ -3,14 +3,15 @@ import ButtonNav from "../../components/ButtonNav";
 import { useDispatch, useSelector } from "react-redux";
 import { AlertTriangle, Edit, Trash2, X } from "lucide-react";
 import Loader from "../../Loader";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { showNotify } from "../../sotre/slices/NotificationToast";
 import { DeleteEvent } from "../../sotre/slices/EventSlice";
 export default function EventDasboard() {
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [eventDelete, seteventDelete] = useState({});
-  const dispatch = useDispatch()
+  const navigate = useNavigate()
+    const dispatch = useDispatch()
 
   const { events, loading } = useSelector((state) => state.EventsData);
   const handleDelete = async (id) => {
@@ -88,7 +89,7 @@ export default function EventDasboard() {
                           {event.title}
                         </div>
                         <div className="text-sm text-gray-500">
-                          {event.description}
+                          {event.description.slice(0,70) + '...'}
                         </div>
                       </div>
                     </td>
@@ -100,7 +101,7 @@ export default function EventDasboard() {
                     </td>
                     <td className="py-1.5 px-2 whitespace-nowrap text-sm font-medium flex  items-center gap-2">
                       <button
-                        onClick={() => Navigate({ to: "/" })}
+                        onClick={() => navigate("/")}
                         className="text-blue-600 hover:text-blue-900 mr-4 flex items-center gap-2"
                       >
                         <span className="hidden md:block">Modifier</span>
