@@ -1,23 +1,20 @@
 
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-export const fetchEvents = createAsyncThunk('events/fetchEvents',async ({ urlApi, eventInfo ,methodHTTP}, { rejectWithValue }) => {
+export const fetchEvents = createAsyncThunk('events/fetchEvents',async ({ urlApi, eventInfo ,methodHTTP,isFormData}, { rejectWithValue }) => {
 
 
     try {
         const method = methodHTTP ;
-        
-        
-        const headers =eventInfo ? {
-            "Accept": "application/json",
-            ...((method ==='POST' || method ==='PUT') ? 
-                {'Authorization': `Bearer ${localStorage.getItem('auth_token')}`} 
-                : {})
+      
+        const headers = eventInfo ? {
+            ...(isFormData &&
+                {'Authorization': `Bearer ${localStorage.getItem('auth_token')}`})
             } : {};
         const res = await fetch(`http://localhost:8000/api/${urlApi}`, {
             method: method,
             headers: headers,
-            ...(method === 'POST' || method === 'PUT' ? { body: eventInfo } : {})
+            ...((isFormData) ? { body: eventInfo } : {})
         });
         if (!res.ok) {
             const status = res.status;
@@ -66,6 +63,14 @@ const EventsSlice = createSlice({
             if (deletedId) {
                 state.events = state.events.filter(e => e.id !== deletedId);
             }
+        },
+        UpdateEvent:(state,action)=>{
+            const updatedEvent = action.payload;
+            
+                   state.events = state.events.map((event) =>
+                    event.id === updatedEvent.id ? updatedEvent : event
+                  );    
+               
         }
     }
     ,
@@ -90,10 +95,6 @@ const EventsSlice = createSlice({
                     
                     state.events = action.payload.data.events;
                 }
-                else if(method === 'PUT'){
-                    
-                    state.events = action.payload.data.events;
-                }
 
             })
             .addCase(fetchEvents.rejected, (state, action) => {
@@ -103,5 +104,5 @@ const EventsSlice = createSlice({
             })
     },
 });
-export const { DeleteEvent} = EventsSlice.actions
+export const { DeleteEvent, UpdateEvent} = EventsSlice.actions
 export default EventsSlice.reducer;

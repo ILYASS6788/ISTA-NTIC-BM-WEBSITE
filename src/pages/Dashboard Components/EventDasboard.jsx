@@ -32,7 +32,7 @@ export default function EventDasboard() {
       succes:data.success }));
      return;
   }
-
+console.log(events)
   dispatch(DeleteEvent({id}))
   dispatch(showNotify({ title: "Succès",
     text: data.message,
@@ -52,13 +52,13 @@ export default function EventDasboard() {
           itemName={eventDelete.name}
         />
       )}
-      <div className="mb-4 flex justify-between items-center">
+      <div className="mb-4 mt-2 flex justify-between items-center">
         <h1 className="sm:text-xl md:text-2xl font-bold text-gray-900">
           Management Events
         </h1>
         <ButtonNav text={"Add Event"} to={"../add-event"} />
       </div>
-      <div className="relative overflow-auto h-[70svh]">
+      <div className="relative overflow-auto h-[77svh]">
         <table className=" relative w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
           <thead className="bg-gray-50 sticky top-0">
             <tr>
@@ -84,7 +84,7 @@ export default function EventDasboard() {
                 events.map((event) => (
                   <tr key={event.id}>
                     <td className="py-1.5 px-2 whitespace-nowrap ">
-                      <div className="overflow-x-auto w-42 md:w-fit">
+                      <div className="w-40 md:w-fit overflow-x-hidden">
                         <div className="text-sm font-medium text-gray-900">
                           {event.title}
                         </div>
@@ -96,12 +96,12 @@ export default function EventDasboard() {
                     <td className="py-1.5 px-2 whitespace-nowrap text-sm text-gray-500 w-fit">
                       {event.date}
                     </td>
-                    <td className="py-1.5 px-2 whitespace-nowrap text-sm text-gray-500">
+                    <td className="py-1.5 px-2 whitespace-nowrap text-sm text-gray-500 w-fit">
                       {event.location}
                     </td>
                     <td className="py-1.5 px-2 whitespace-nowrap text-sm font-medium flex  items-center gap-2">
                       <button
-                        onClick={() => navigate("/")}
+                        onClick={() => navigate(`../modifier-event/${event.id}`)}
                         className="text-blue-600 hover:text-blue-900 mr-4 flex items-center gap-2"
                       >
                         <span className="hidden md:block">Modifier</span>

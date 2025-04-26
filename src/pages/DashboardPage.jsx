@@ -20,7 +20,7 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="bg-gray-50 h-fit"
+    <div className="bg-gray-50"
     >
       
       <div className="flex items-stretch">
@@ -56,7 +56,7 @@ export default function DashboardPage() {
   })
   
   return (
-    <div className="flex flex-col gap-2 w-fit text-[10px] sm:text-xs z-50 absolute bottom-5 right-2">
+    <div className="flex flex-col gap-2 w-fit text-[10px] sm:text-xs z-50 fixed bottom-5 right-2">
         <motion.div
           className={`succsess-alert cursor-default flex items-center justify-between w-full h-12 sm:h-14 rounded-lg bg-white shadow-2xl
              ${success ? 'shadow-green-300' : 'shadow-red-300 border-red-400'} px-[10px]`}

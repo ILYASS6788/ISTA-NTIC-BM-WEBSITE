@@ -19,6 +19,7 @@ import Apropos from "../components/Apropos";
 import EventDetails from "../pages/EventDetails";
 import AddSchedulePage from "../pages/Dashboard Components/addSchedule";
 import AddEventPage from "../pages/Dashboard Components/AddEvent";
+import UpdateEvent from "../pages/Dashboard Components/UpdateEvent";
 
 
 const router = createBrowserRouter([
@@ -66,6 +67,10 @@ const router = createBrowserRouter([
           {
             path: "add-event",
             element: <AddEventPage />
+          },
+          {
+            path: "modifier-event/:id",
+            element: <UpdateEvent />
           },
           {
             path: "schedule",

@@ -1,15 +1,20 @@
-export const fetchCourses = createAsyncThunk('courses/fetchCourses', async ({ urlApi, courseInfo, methodHTTP }, { rejectWithValue }) => {
+
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+
+
+
+export const fetchCourses = createAsyncThunk('courses/fetchCourses', async ({ urlApi, courseInfo, methodHTTP,isFormData }, { rejectWithValue }) => {
     try {
       const method = methodHTTP;
       const headers = courseInfo ? {
         "Accept": "application/json",
-        ...(method === 'POST' || method === 'PUT' ? { 'Authorization': `Bearer ${localStorage.getItem('auth_token')}` } : {})
+        ...(isFormData ? { 'Authorization': `Bearer ${localStorage.getItem('auth_token')}` } : {})
       } : {};
   
       const res = await fetch(`http://localhost:8000/api/${urlApi}`, {
         method,
         headers,
-        ...(method === 'POST' || method === 'PUT' ? { body: courseInfo } : {})
+        ...(isFormData ? { body: courseInfo } : {})
       });
   
       if (!res.ok) {
@@ -48,6 +53,14 @@ export const fetchCourses = createAsyncThunk('courses/fetchCourses', async ({ ur
         if (deletedId) {
           state.courses = state.courses.filter(c => c.id !== deletedId);
         }
+      },
+      UpdateCours:(state,action)=>{
+          const updatedCours = action.payload;
+          
+                 state.courses = state.courses.map((course) =>
+                  course.id === updatedCours.id ? updatedCours : course
+                );    
+             
       }
     },
     extraReducers: (builder) => {
@@ -64,7 +77,7 @@ export const fetchCourses = createAsyncThunk('courses/fetchCourses', async ({ ur
             if (!exist) {
               state.courses.push(data.course);
             }
-          } else if (method === 'GET' || method === 'PUT') {
+          } else if (method === 'GET') {
             state.courses = data.courses;
           }
         })
@@ -76,6 +89,6 @@ export const fetchCourses = createAsyncThunk('courses/fetchCourses', async ({ ur
     }
   });
   
-  export const { DeleteCourse } = CoursesSlice.actions;
+  export const { DeleteCourse, UpdateCours } = CoursesSlice.actions;
   export default CoursesSlice.reducer;
   

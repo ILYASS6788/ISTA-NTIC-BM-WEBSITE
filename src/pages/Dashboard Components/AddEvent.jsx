@@ -44,15 +44,19 @@ export default function AddEventPage() {
         urlApi: "adminOnly/addnewEvent",
         eventInfo: formData,
         methodHTTP: "POST",
+        isFormData: true,
       })
     );
     console.log(res);
     if (res.payload.data.errors) {
       setErrorsForm(res.payload.data.errors);
-      dispatch(showNotify({ title: "avertissement",
-        text: "les valeurs que vous avez envoyées ne sont pas valides",
-       success:false }));
-
+      dispatch(
+        showNotify({
+          title: "avertissement",
+          text: "les valeurs que vous avez envoyées ne sont pas valides",
+          success: false,
+        })
+      );
     } else if (res.payload.data.success) {
       setEvent({
         title: "",
@@ -64,9 +68,13 @@ export default function AddEventPage() {
         image: null,
       });
       navigate(-1);
-      dispatch(showNotify({ title: "succès",
-         text: "Événement ajouté avec succès",
-        success:true }));
+      dispatch(
+        showNotify({
+          title: "succès",
+          text: "Événement ajouté avec succès",
+          success: true,
+        })
+      );
     }
   };
 
@@ -77,188 +85,178 @@ export default function AddEventPage() {
   }
 
   return (
-    <div className="min-h-fit bg-gray-50 w-full py-4 px-2 sm:py-6 sm:px-4 md:py-8 md:px-6 lg:px-8">
-    <div>
-      <GoBackBtn />
-    </div>
-  
-    <div className="w-full max-w-3xl mx-auto relative">
-      {loading ? (
-        <Loader />
-      ) : (
-        <form
-          encType="multipart/form-data"
-          onSubmit={handleSubmit}
-          className="bg-white shadow-xl rounded-b-lg sm:rounded-b-xl md:rounded-b-2xl p-4 sm:p-6 md:p-8"
-        >
-          <div className="mb-8">
-            <h2 className="text-2xl sm:text-3xl font-bold text-center text-blue-600">
-              Create New Event
-            </h2>
-            <p className="text-center text-gray-600 mt-2 text-sm sm:text-base">
-              Fill in the details to create your event
-            </p>
-          </div>
-  
-          <div className="space-y-6">
-            {/* Event Title */}
-            <div>
-              <label className="text-sm font-medium text-gray-700">Event Title</label>
-              <input
-                type="text"
-                name="title"
-                required
-                onChange={handleChange}
-                value={event.title}
-                className=" outline-0 mt-1 block w-full px-3 py-2 sm:px-4 sm:py-3 text-sm sm:text-base bg-gray-50 border border-gray-300 rounded-md sm:rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
-                placeholder="Enter event title"
-              />
-              {errorsForm.title && (
-                <p className="text-red-500 text-sm mt-2">{errorsForm.title}</p>
-              )}
-            </div>
-  
-            {/* Date and Time */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-              {/* Date */}
-              <div>
-                <label className="text-sm font-medium text-gray-700">Date</label>
-                <input
-                  type="date"
-                  required
-                  name="date"
-                  onChange={handleChange}
-                  value={event.date}
-                  className=" outline-0 mt-1 block w-full px-3 py-2 sm:px-4 sm:py-3 text-sm sm:text-base bg-gray-50 border border-gray-300 rounded-md sm:rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
-                />
-                {errorsForm.date && (
-                  <p className="text-red-500 text-sm mt-2">{errorsForm.date}</p>
-                )}
-              </div>
-  
-              {/* Time */}
-              <div>
-                <label className="text-sm font-medium text-gray-700">Time</label>
-                <input
-                  type="time"
-                  name="time"
-                  required
-                  onChange={handleChange}
-                  value={event.time}
-                  className=" outline-0 mt-1 block w-full px-3 py-2 sm:px-4 sm:py-3 text-sm sm:text-base bg-gray-50 border border-gray-300 rounded-md sm:rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
-                />
-                {errorsForm.time && (
-                  <p className="text-red-500 text-sm mt-2">{errorsForm.time}</p>
-                )}
-              </div>
-            </div>
-  
-            {/* Location */}
-            <div>
-              <label className="text-sm font-medium text-gray-700">Location</label>
-              <input
-                type="text"
-                name="location"
-                required
-                onChange={handleChange}
-                value={event.location}
-                className=" outline-0 mt-1 block w-full px-3 py-2 sm:px-4 sm:py-3 text-sm sm:text-base bg-gray-50 border border-gray-300 rounded-md sm:rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
-                placeholder="Enter event location"
-              />
-              {errorsForm.location && (
-                <p className="text-red-500 text-sm mt-2">{errorsForm.location}</p>
-              )}
-            </div>
-  
-            {/* Description */}
-            <div>
-              <label className="text-sm font-medium text-gray-700">Description</label>
-              <textarea
-                name="description"
-                onChange={handleChange}
-                value={event.description}
-               
-                className=" outline-0 mt-1 block w-full px-3 py-2 sm:px-4 sm:py-3 text-sm sm:text-base bg-gray-50 border border-gray-300 rounded-md sm:rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 resize-none"
-                placeholder="Describe your event..."
-              />
-              {errorsForm.description && (
-                <p className="text-red-500 text-sm mt-2">{errorsForm.description}</p>
-              )}
-            </div>
-  
-            {/* Details */}
-            <div>
-              <label className="text-sm font-medium text-gray-700">Details</label>
-              <textarea
-                name="details"
-                onChange={handleChange}
-                value={event.details}
-                rows="4"
-                className=" outline-0 mt-1 block w-full px-3 py-2 sm:px-4 sm:py-3 text-sm sm:text-base bg-gray-50 border border-gray-300 rounded-md sm:rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 resize-none"
-                placeholder="Detail your event..."
-              />
-              {errorsForm.details && (
-                <p className="text-red-500 text-sm mt-2">{errorsForm.details}</p>
-              )}
-            </div>
-  
-            {/* Image Upload */}
-            <div>
-              <label className="text-sm font-medium text-gray-700">Event Images</label>
-              <label
-                htmlFor="imageEvent"
-                className="cursor-pointer mt-1 flex justify-center px-4 sm:px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg hover:border-blue-500 transition duration-200"
-              >
-                <div className="space-y-1 text-center">
-                  <FileImage size={45} className="mx-auto text-gray-400" />
-                  <div className="flex flex-col sm:flex-row justify-center items-center text-sm text-gray-600 gap-1">
-                    <label className="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none">
-                      <span>
-                        {event.image ? event.image.name : "Upload files"}
-                      </span>
-                      <input
-                        id="imageEvent"
-                        type="file"
-                        name="image"
-                        multiple
-                        className="sr-only"
-                        onChange={handleChange}
-                      />
-                    </label>
-                    {!event.image && (
-                      <p className="text-gray-500">or drag and drop</p>
-                    )}
-                  </div>
-                  {event.image ? (
-                    <p className="text-xs text-gray-500">
-                      {formatFileSize(event.image.size)}
-                    </p>
-                  ) : (
-                    <p className="text-xs text-gray-500">PNG, JPG,... 10MB</p>
-                  )}
-                  {errorsForm.image && (
-                    <p className="text-red-500 text-sm mt-2">
-                      {errorsForm.image[0]}
-                    </p>
-                  )}
-                </div>
-              </label>
-            </div>
-          </div>
-  
-          {/* Action Buttons */}
-          <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4">
-            <button
-              type="submit"
-              className="w-full sm:w-auto flex-1 bg-blue-600 text-white py-3 px-6 rounded-lg text-sm font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-200"
-            >
-              Create Event
-            </button>
-          </div>
-        </form>
-      )}
-    </div>
+    <div className="min-h-fit bg-gray-50 w-full py-2 px-1 sm:py-3 sm:px-2 md:py-4 md:px-4 lg:px-6">
+  <div>
+    <GoBackBtn />
   </div>
-  
+
+  <div className="w-full max-w-2xl mx-auto relative">
+    <form
+      encType="multipart/form-data"
+      onSubmit={handleSubmit}
+      className="bg-white shadow-lg rounded-lg p-3 sm:p-4"
+    >
+      <div className="mb-4">
+        <h2 className="text-xl sm:text-2xl font-bold text-center text-blue-600">
+          Create Event
+        </h2>
+        <p className="text-center text-gray-600 mt-1 text-xs sm:text-sm">
+          Enter event details below
+        </p>
+      </div>
+
+      <div className="space-y-4">
+        {/* Title */}
+        <div>
+          <label className="text-xs font-medium text-gray-700">
+            Event Title
+          </label>
+          <input
+            type="text"
+            name="title"
+            required
+            onChange={handleChange}
+            value={event.title}
+            className="mt-1 block w-full px-2 py-1 text-xs bg-gray-50 border border-gray-300 outline-0 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            placeholder="Title"
+          />
+          {errorsForm.title && (
+            <p className="text-red-500 text-xs mt-1">{errorsForm.title}</p>
+          )}
+        </div>
+
+        {/* Date and Time */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <div>
+            <label className="text-xs font-medium text-gray-700">Date</label>
+            <input
+              type="date"
+              name="date"
+              required
+              onChange={handleChange}
+              value={event.date}
+              className="mt-1 block w-full px-2 py-1 text-xs bg-gray-50 border border-gray-300 outline-0 focus:ring-2 focus:ring-blue-500"
+            />
+            {errorsForm.date && (
+              <p className="text-red-500 text-xs mt-1">{errorsForm.date}</p>
+            )}
+          </div>
+          <div>
+            <label className="text-xs font-medium text-gray-700">Time</label>
+            <input
+              type="time"
+              name="time"
+              required
+              onChange={handleChange}
+              value={event.time}
+              className="mt-1 block w-full px-2 py-1 text-xs bg-gray-50 border border-gray-300 outline-0 focus:ring-2 focus:ring-blue-500"
+            />
+            {errorsForm.time && (
+              <p className="text-red-500 text-xs mt-1">{errorsForm.time}</p>
+            )}
+          </div>
+        </div>
+
+        {/* Location */}
+        <div>
+          <label className="text-xs font-medium text-gray-700">Location</label>
+          <input
+            type="text"
+            name="location"
+            required
+            onChange={handleChange}
+            value={event.location}
+            className="mt-1 block w-full px-2 py-1 text-xs bg-gray-50 border border-gray-300 outline-0 focus:ring-2 focus:ring-blue-500"
+            placeholder="Location"
+          />
+          {errorsForm.location && (
+            <p className="text-red-500 text-xs mt-1">{errorsForm.location}</p>
+          )}
+        </div>
+
+        {/* Description */}
+        <div>
+          <label className="text-xs font-medium text-gray-700">
+            Description
+          </label>
+          <textarea
+            name="description"
+            onChange={handleChange}
+            value={event.description}
+            className="mt-1 block w-full px-2 py-1 text-xs bg-gray-50 border border-gray-300 outline-0 focus:ring-2 focus:ring-blue-500 resize-none"
+            placeholder="Event description"
+          />
+          {errorsForm.description && (
+            <p className="text-red-500 text-xs mt-1">{errorsForm.description}</p>
+          )}
+        </div>
+
+        {/* Details */}
+        <div>
+          <label className="text-xs font-medium text-gray-700">Details</label>
+          <textarea
+            name="details"
+            onChange={handleChange}
+            value={event.details}
+            rows="3"
+            className="mt-1 block w-full px-2 py-1 text-xs bg-gray-50 border border-gray-300 outline-0 focus:ring-2 focus:ring-blue-500 resize-none"
+            placeholder="Event details"
+          />
+          {errorsForm.details && (
+            <p className="text-red-500 text-xs mt-1">{errorsForm.details}</p>
+          )}
+        </div>
+
+        {/* Image Upload */}
+        <div>
+          <label className="text-xs font-medium text-gray-700">Image</label>
+          <label
+            htmlFor="imageEvent"
+            className="cursor-pointer mt-1 flex justify-center items-center px-3 pt-3 pb-4 border-2 border-dashed border-gray-300 rounded hover:border-blue-500 transition"
+          >
+            <div className="text-center text-xs text-gray-600 space-y-1">
+              <FileImage size={30} className="mx-auto text-gray-400" />
+              <span className="block">
+                {event.image ? event.image.name : "Upload or drag image"}
+              </span>
+              {event.image && (
+                <p className="text-gray-500 text-[10px]">
+                  {formatFileSize(event.image.size)}
+                </p>
+              )}
+              {!event.image && (
+                <p className="text-gray-400 text-[10px]">PNG, JPG, 10MB max</p>
+              )}
+              {errorsForm.image && (
+                <p className="text-red-500 text-xs mt-1">
+                  {errorsForm.image[0]}
+                </p>
+              )}
+              <input
+                id="imageEvent"
+                type="file"
+                name="image"
+                className="sr-only"
+                multiple
+                onChange={handleChange}
+              />
+            </div>
+          </label>
+        </div>
+      </div>
+
+      {/* Buttons */}
+      <div className="mt-4">
+        <button
+          type="submit"
+          className="w-full bg-blue-600 text-white py-2 text-sm font-semibold outline-0 hover:bg-blue-700 transition"
+        >
+          Create
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
   );
 }
