@@ -6,6 +6,7 @@ import Loader from "./Loader";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchEvents } from "./sotre/slices/EventSlice";
 import { setUser } from "./sotre/slices/AuthSlice";
+import { fetchCourses } from "./sotre/slices/CoursSlice";
 
 function App() {
   const location = useLocation();
@@ -33,10 +34,14 @@ function App() {
     fetchUser();
   }, []);
   useEffect(() => {
-    async function fetchData() {
+    async function fetchEventData() {
       await dispatch(fetchEvents({ urlApi: "getevents", methodHTTP: "GET" }));
     }
-    fetchData();
+    async function fetchCoursesData() {
+      await dispatch(fetchCourses({ urlApi: "getcourses", methodHTTP: "GET" }));
+    }
+    fetchEventData();
+    fetchCoursesData();
   }, []);
   const [isLogOut, setIsLogOut] = useState(false);
 
@@ -48,10 +53,10 @@ function App() {
       <header className="sticky top-0 z-50">
         <Navigation setIsLogOut={setIsLogOut} />
       </header>
-      <main className="min-h-screen">
+      <main className="h-fit">
         <Outlet />
       </main>
-      {role === "admin" && location.pathname.includes("dashboard") ? null : (
+      {(role === "admin" && location.pathname.includes("dashboard")) ? null : (
         <Footer />
       )}
     </>

@@ -1,41 +1,88 @@
-import { File } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import GoBackBtn from "../../components/GoBackBtn";
+import { fetchCourses } from "../../sotre/slices/CoursSlice";
+import { showNotify } from "../../sotre/slices/NotificationToast";
+import { useDispatch } from "react-redux";
+import { formatFileSize } from "./AddEvent";
+import { SelectModules } from "./LessonDashboard";
+import { LucideFileUp } from "lucide-react";
+
 export default function AddCourseForm() {
   const [cours, setCourse] = useState({
-    title:'',
-    module_id:'',
-    cours_pdf:null
-});
-  const [modules, setModules] = useState([]);
+    name: "",
+    module_id: "",
+    course_pdf: null,
+  });
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const handleChange = (e) => {
-    const {name,value,files} = e.target;
-    setMaterials({...cours,[name]: files ? files[0] : value});
+    const { name, value, files } = e.target;
+    setCourse({ ...cours, [name]: files ? files[0] : value });
   };
 
-  useEffect(()=>{
-    const fetchModules = async()=>{
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/adminOnly/getmodules`,{
-          method:'GET',
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
-          }
-        })
-        const data = await res.json()
-        setModules(data.modules)
+  const [errorsForm, setErrorsForm] = useState({});
 
-
-    }
-    fetchModules()
-    console.log(modules)
-  },[])
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
+    const formData = new FormData();
+    formData.append("name", cours.name);
+    formData.append("module_id", cours.module_id);
+    formData.append("course_pdf", cours.course_pdf);
+    console.log(formData);
     console.log(cours);
+    const res = await dispatch(
+      fetchCourses({
+        urlApi: "adminOnly/addNewcourses",
+        courseInfo: formData,
+        methodHTTP: "POST",
+        isFormData: true,
+      })
+    );
+    
+    if (res.payload.data.errors) {
+      setErrorsForm(res.payload.data.errors);
+      dispatch(
+        showNotify({
+          title: "avertissement",
+          text: "les valeurs que vous avez envoyées ne sont pas valides",
+          success: false,
+        })
+      );
+      
+    } else if (res.payload.data.succes) {
+      setCourse({
+        name: "",
+        module_id: "",
+        course_pdf: null,
+      });
+      navigate(-1);
+      dispatch(
+        showNotify({
+          title: "succès",
+          text: "Course ajouté avec succès",
+          success: true,
+        })
+      );
+    }
+  };
+  const handleDrag = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
+ 
+  const handleDrop = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const fileDropped = e.dataTransfer.files[0];
+    if (fileDropped) {
+      setCourse((prev) => ({
+        ...prev,
+        course_pdf: fileDropped,
+      }));
+    }
   };
 
   return (
@@ -43,12 +90,11 @@ export default function AddCourseForm() {
       <div className="mb-2">
         <GoBackBtn />
       </div>
-      <h2 className="text-xl font-semibold text-gray-800 mb-4 text-center">
+      <h2 className="text-3xl font-bold text-gray-800 mb-4 text-center">
         Add New Course
       </h2>
 
       <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Title & Subject */}
         <div className="flex flex-col md:flex-row gap-4">
           <div className="w-full">
             <label className="block text-xs font-medium text-gray-700 mb-1">
@@ -57,62 +103,74 @@ export default function AddCourseForm() {
             <input
               type="text"
               required
-              name="title"
-              value={cours.title}
+              name="name"
+              value={cours.name}
               onChange={handleChange}
               className="w-full border border-gray-300 px-2 py-1 text-sm outline-0 focus:outline-none focus:ring-1 focus:ring-blue-500"
             />
+            {errorsForm.name && (
+              <p className="text-red-500 text-xs mt-1">{errorsForm.name}</p>
+            )}
           </div>
-          <div className="w-full">
-            <label className="block text-xs font-medium text-gray-700 mb-1">
-              Module
-            </label>
-            <select name="module_id" id="module" 
-            value={cours.module_id}
-              onChange={handleChange}>
-              {modules.map((module,index) => 
-                <option key={index} value={module.id}>{module.name}</option>
-              )}
-            </select>
-          </div>
+
+          <SelectModules
+            Value_module_id={cours.module_id}
+            handleChange={handleChange}
+            errorNotSelected={errorsForm.module_id}
+          />
+          
         </div>
 
-
-        {/* File Upload */}
-        <div className="border-2 border-dashed border-gray-300 p-4 outline-0 text-center hover:border-blue-400 transition">
+        <div
+          className="border-2 border-dashed border-gray-300 p-4 outline-0 text-center hover:border-blue-400 transition"
+          onDragEnter={handleDrag}
+          onDragOver={handleDrag}
+          onDrop={handleDrop}
+        >
           <label
             htmlFor="courseFile"
             className="cursor-pointer block text-xs text-gray-700"
           >
-            <File className="text-indigo-700 mx-auto w-10 h-10 mb-1" />
-            Course Materials (PDFs)
+            <LucideFileUp className="text-indigo-700 mx-auto w-10 h-10 mb-1" />
+            {cours.course_pdf
+              ? cours.course_pdf.name
+              : " Document de cours (PDFs)"}
           </label>
+          {cours.course_pdf && (
+            <p className="text-gray-500 text-[10px]">
+              {formatFileSize(cours.course_pdf.size)}
+            </p>
+          )}
+          {!cours.course_pdf && (
+            <p className="text-gray-400 text-[10px]">PDF, 10MB max</p>
+          )}
+          {errorsForm.course_pdf && (
+            <p className="text-red-500 text-xs mt-1">
+              {errorsForm.course_pdf[0]}
+            </p>
+          )}
           <input
             id="courseFile"
-            required
-            name="cours_pdf"
+            name="course_pdf"
             type="file"
             accept=".pdf"
-            multiple
-            onChange={handleChange
-              
-            }
+            onChange={handleChange}
             className="hidden"
           />
         </div>
 
         {/* Buttons */}
-        <div className="space-y-2">
+        <div className="space-y-2 flex justify-end items-center gap-1.5">
           <button
             type="submit"
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white text-sm py-2 outline-0"
+            className="px-8 m-0 cursor-pointer bg-blue-600 hover:bg-blue-700 text-white text-sm py-2 outline-0"
           >
             Add Course
           </button>
           <button
             type="button"
-            onClick={() => navigate("/dashboard")}
-            className="w-full bg-gray-300 hover:bg-gray-400 text-gray-700 text-sm py-2 outline-0"
+            onClick={() => navigate(-1)}
+            className="px-8 cursor-pointer bg-gray-300 hover:bg-gray-400 text-gray-700 text-sm py-2 outline-0"
           >
             Cancel
           </button>

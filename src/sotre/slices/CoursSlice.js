@@ -12,8 +12,8 @@ export const fetchCourses = createAsyncThunk('courses/fetchCourses', async ({ ur
       } : {};
   
       const res = await fetch(`http://localhost:8000/api/${urlApi}`, {
-        method,
-        headers,
+        method: method,
+        headers: headers,
         ...(isFormData ? { body: courseInfo } : {})
       });
   
@@ -57,10 +57,10 @@ export const fetchCourses = createAsyncThunk('courses/fetchCourses', async ({ ur
       UpdateCours:(state,action)=>{
           const updatedCours = action.payload;
           
-                 state.courses = state.courses.map((course) =>
-                  course.id === updatedCours.id ? updatedCours : course
-                );    
-             
+          state.courses = state.courses.map((course) =>
+          course.id === updatedCours.id ? updatedCours : course
+        );    
+      
       }
     },
     extraReducers: (builder) => {
