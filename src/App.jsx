@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchEvents } from "./sotre/slices/EventSlice";
 import { setUser } from "./sotre/slices/AuthSlice";
 import { fetchCourses } from "./sotre/slices/CoursSlice";
+import { fetchSchedules } from "./sotre/slices/ScheduleSlice";
 
 function App() {
   const location = useLocation();
@@ -40,8 +41,15 @@ function App() {
     async function fetchCoursesData() {
       await dispatch(fetchCourses({ urlApi: "getcourses", methodHTTP: "GET" }));
     }
+    async function fetchScheduleData() {
+      await dispatch(fetchSchedules({
+        urlApi: "getschedules",
+        methodHTTP: "GET"
+      }));
+    }
     fetchEventData();
     fetchCoursesData();
+    fetchScheduleData();
   }, []);
   const [isLogOut, setIsLogOut] = useState(false);
 

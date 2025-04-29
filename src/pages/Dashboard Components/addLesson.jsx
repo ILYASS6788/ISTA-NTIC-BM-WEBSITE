@@ -5,7 +5,7 @@ import { fetchCourses } from "../../sotre/slices/CoursSlice";
 import { showNotify } from "../../sotre/slices/NotificationToast";
 import { useDispatch } from "react-redux";
 import { formatFileSize } from "./AddEvent";
-import { SelectModules } from "./LessonDashboard";
+import { SelectDropdown } from "./LessonDashboard";
 import { LucideFileUp } from "lucide-react";
 
 export default function AddCourseForm() {
@@ -113,11 +113,15 @@ export default function AddCourseForm() {
             )}
           </div>
 
-          <SelectModules
-            Value_module_id={cours.module_id}
+          <SelectDropdown
+            type="modules"
+            value={cours.module_id}
+            name="module_id"
+            label="Module"
+            Showerror={errorsForm.module_id}
             handleChange={handleChange}
-            errorNotSelected={errorsForm.module_id}
           />
+
           
         </div>
 

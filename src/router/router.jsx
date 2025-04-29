@@ -97,6 +97,7 @@ const router = createBrowserRouter([
       element: <Entrer />, // Entrer is the container/layout
       children: [
         {
+          index:true,
           path: "join-us", // Relative path inside Entrer
           element: <Login />, // Renders Login page inside Entrer
         },

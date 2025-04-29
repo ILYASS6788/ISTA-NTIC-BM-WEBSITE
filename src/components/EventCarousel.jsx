@@ -78,7 +78,7 @@ export default function EventCarousel({ events }) {
             {/* Dark Overlay */}
             <div className="absolute inset-0 bg-black opacity-50"></div> {/* Added dark overlay */}
             <div className="absolute inset-0 flex flex-col justify-center items-center text-white p-8 bg-gradient-to-t from-black/95 via-transparent to-transparent ">
-              <h2 className="text-amber-500 text-2xl md:text-[5rem] font-bold mb-4">
+              <h2 className="text-amber-500 text-2xl md:text-[5rem] font-bold mb-4 text-center">
                 {event.title}
               </h2>
               <p className="text-amber-300 text-xl md:text-4xl mb-2 font-bold">

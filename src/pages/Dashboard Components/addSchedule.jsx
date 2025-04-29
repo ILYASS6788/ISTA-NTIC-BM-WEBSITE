@@ -1,83 +1,161 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-export default function AddSchedulePage() {
+import { useDispatch } from "react-redux";
+import GoBackBtn from "../../components/GoBackBtn";
+import { LucideFileUp, Loader2 } from "lucide-react";
+import { showNotify } from "../../sotre/slices/NotificationToast";
+import { SelectDropdown } from "./LessonDashboard";
+import { formatFileSize } from "./AddEvent";
+import { fetchSchedules } from "../../sotre/slices/ScheduleSlice";
 
-  const navigate = useNavigate();
+
+export default function AddScheduleForm() {
   const [schedule, setSchedule] = useState({
-    startTime: "",
-    endTime: "",
-    subject: "",
-    instructor: "",
-    room: "",
+    filiers_id: "",
+    schedule_pdf: null,
   });
+  const [errorsForm, setErrorsForm] = useState({});
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setSchedule({
-      ...schedule,
-      [name]: value,
-    });
+    const { name, value, files } = e.target;
+    setSchedule({ ...schedule, [name]: files ? files[0] : value });
   };
 
-  const handleSubmit = (e) => {
+  const handleDrag = (e) => {
     e.preventDefault();
-    // Here, you would send the data to your backend
-    console.log("Schedule added:", schedule);
-    // Reset the form after submitting
-    setSchedule({
-      startTime: "",
-      endTime: "",
-      subject: "",
-      instructor: "",
-      room: "",
-    });
+    e.stopPropagation();
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const droppedFile = e.dataTransfer.files[0];
+    if (droppedFile) {
+      setSchedule((prev) => ({
+        ...prev,
+        schedule_pdf: droppedFile,
+      }));
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    const formData = new FormData();
+    formData.append("filiers_id", schedule.filiers_id);
+    formData.append("schedule_pdf", schedule.schedule_pdf);
+
+    const res = await dispatch(
+      fetchSchedules({
+        urlApi: "adminOnly/addNewSchedule",
+        scheduleInfo : formData,
+        methodHTTP: "POST",
+        isFormData: true,
+      })
+    );
+
+    setLoading(false);
+
+    if (res.payload.data.errors) {
+      setErrorsForm(res.payload.data.errors);
+      dispatch(
+        showNotify({
+          title: "Erreur",
+          text: "Les données envoyées sont invalides.",
+          success: false,
+        })
+      );
+    } else if (res.payload.data.success) {
+      setSchedule({ filiers_id: "", schedule_pdf: null });
+      navigate(-1);
+      dispatch(
+        showNotify({
+          title: "Succès",
+          text: "Emploi du temps ajouté avec succès.",
+          success: true,
+        })
+      );
+    }
   };
 
   return (
-    <div className="w-svh mx-auto p-2 bg-gradient-to-br from-blue-100 via-blue-200 to-indigo-300 rounded-xl shadow-lg h-110 mt-9 ">
-      <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center"> Add New Schedule</h2>
+    <div className="max-w-2xl mx-auto mt-10 p-6 bg-white rounded-2xl shadow-lg">
+      <GoBackBtn />
+      <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">
+        📅 Ajouter un Emploi du Temps
+      </h1>
 
-      <label
-        for="grpoup"
-        class="block mb-2 text-center font-medium text-gray-900 dark:text-black"
-      >
-        Select Group
-      </label>
-      <select
-        id="countries"
-        className="bg-gray-50 border  border-gray-300 text-gray-900   rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-100 py-2 px-5 m-9 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-      >
-        <option selected>Choose a Group</option>
-        <option value="US">devloppement web 1A</option>
-        <option value="CA">devloppement web 2A</option>
-        <option value="FR">infrastructure digital 1A</option>
-        <option value="DE">infrastricture digital 1A</option>
-      </select>
-      <div className=" flex gap-4 mb-4 ml-40 mt-17">
-          <label className="block mb-1 font-medium text-gray-700">schudule Materials (PDFs) :</label>
-          <input
-            type="file"
-            accept=".pdf"
-            multiple
-            className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+      <form onSubmit={handleSubmit} className="space-y-6">
+        {/* Select Filière */}
+        <div>
+          <SelectDropdown
+            type="filiers"
+            value={schedule.id}
+            name="filiers_id"
+            label="Filière"
+            Showerror={errorsForm.filiers_id}
+            handleChange={handleChange}
           />
         </div>
 
-      <div className="flex justify-around mt-17 ">
-        <button
-          type="submit"
-          className="w-50  bg-blue-600 text-white text-lg font-semibold  shadow-md hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 rounded-xl"
+        {/* File Upload */}
+        <div
+          className="w-full border-2 border-dashed rounded-xl text-center p-6 cursor-pointer hover:border-blue-400 transition-all"
+          onDragEnter={handleDrag}
+          onDragOver={handleDrag}
+          onDrop={handleDrop}
         >
-          Add Schedule
-        </button>
-        <button
-          type="button"
-          onClick={() => navigate("/dashboard")}
-          className="w-50 bg-gray-300 hover:bg-gray-400 text-gray-700 font-semibold py-2  rounded-xl transition-all duration-200 text-lg"
-        >
-          Cancel
-        </button>
-      </div>
+          <label htmlFor="schedule_pdf" className="cursor-pointer block">
+            <LucideFileUp className="w-10 h-10 text-blue-600 mx-auto" />
+            <p className="text-gray-600 mt-2">
+              {schedule.schedule_pdf
+                ? schedule.schedule_pdf.name
+                : "Glissez un fichier PDF ici ou cliquez pour en choisir un."}
+            </p>
+            {schedule.schedule_pdf && (
+              <p className="text-xs text-gray-500">
+                {formatFileSize(schedule.schedule_pdf.size)}
+              </p>
+            )}
+            {errorsForm.schedule_pdf && (
+              <p className="text-red-500 text-sm mt-2">
+                {errorsForm.schedule_pdf[0]}
+              </p>
+            )}
+          </label>
+          <input
+            id="schedule_pdf"
+            name="schedule_pdf"
+            type="file"
+            accept=".pdf"
+            className="hidden"
+            onChange={handleChange}
+          />
+        </div>
+
+        {/* Action Buttons */}
+        <div className="flex justify-end gap-3">
+          <button
+            type="submit"
+            disabled={loading}
+            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-md flex items-center gap-2"
+          >
+            {loading && <Loader2 className="w-4 h-4 animate-spin" />}
+            Ajouter
+          </button>
+          <button
+            type="button"
+            onClick={() => navigate(-1)}
+            className="bg-gray-200 hover:bg-gray-300 text-gray-700 px-6 py-2 rounded-md"
+          >
+            Annuler
+          </button>
+        </div>
+      </form>
     </div>
   );
 }

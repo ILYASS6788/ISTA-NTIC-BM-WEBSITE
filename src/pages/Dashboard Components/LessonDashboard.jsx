@@ -76,11 +76,15 @@ export default function LessonDashboard() {
         <ButtonNav text={"Ajouter un cours"} to={"../add-lesson"} />
       </div>
       <div className="bg-white rounded-lg shadow p-6">
-        <SelectModules
-          Value_module_id={filterModule}
-          handleChange={handleModuleChange}
-          errorNotSelected={errorFilter}
-        />
+      <SelectDropdown
+        type="modules"
+        value={filterModule}
+        name="module_id"
+        label="Module"
+        Showerror={errorFilter}
+        handleChange={handleModuleChange}
+      />
+
         <div className="relative space-y-4 overflow-auto h-[55svh]">
           {loading ? (
             <Loader />
@@ -128,13 +132,20 @@ const CoursCard = ({ course, setConfirmDelete, setcourseDelete }) => {
   );
 };
 
-export const SelectModules = ({ Value_module_id, handleChange, errorNotSelected }) => {
-  const [modules, setModules] = useState([]);
+export const SelectDropdown = ({
+  type, 
+  value,
+  name,
+  label,
+  Showerror,
+  handleChange
+}) => {
+  const [items, setItems] = useState([]);
 
   useEffect(() => {
-    const fetchModules = async () => {
+    const fetchItems = async () => {
       const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/adminOnly/getmodules`,
+        `${import.meta.env.VITE_API_URL}/adminOnly/get${type}`,
         {
           method: "GET",
           headers: {
@@ -143,33 +154,31 @@ export const SelectModules = ({ Value_module_id, handleChange, errorNotSelected 
         }
       );
       const data = await res.json();
-      setModules(data.modules);
+      setItems(data[type]); 
     };
-    fetchModules();
-  }, []);
+    fetchItems();
+  }, [type]);
 
   return (
-    <div className="w-full flex gap-2 items-center">
-      <label className="block text-xs font-medium text-gray-700 my-auto">
-        Module
+    <div className="w-full flex flex-col mb-3">
+      <label className="block text-xs font-medium text-gray-700 mb-1">
+        {label}
       </label>
       <select
-        className="p-1 outline-0"
-        name="module_id"
-        id="module"
-        value={Value_module_id}
+        className="p-2 rounded-md outline-none focus:ring-2 focus:ring-blue-400"
+        name={name}
+        value={value}
         onChange={handleChange}
       >
-        <option value="all">Sélectionner un module</option>
-        {modules.map((module, index) => (
-          <option key={index} value={module.id}>
-            {module.name}
+        <option value="all">Sélectionner {type === "modules" ? "un module" : "une filière"}</option>
+        {items.map((item) => (
+          <option key={item.id} value={item.id}>
+            {item.name}
           </option>
         ))}
       </select>
-      {errorNotSelected && (
-        <p className="text-red-500 text-xs mt-1">{errorNotSelected}</p>
-      )}
+      {Showerror && <p className="text-red-500 text-xs mt-1">{Showerror}</p>}
     </div>
   );
 };
+

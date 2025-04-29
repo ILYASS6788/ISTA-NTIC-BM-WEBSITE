@@ -6,6 +6,7 @@ import { CheckCircleIcon, MessageCircleWarningIcon, X } from "lucide-react";
 import { motion } from 'framer-motion';
 import { hideNotify } from "../sotre/slices/NotificationToast";
 import { useEffect } from "react";
+import Dashboard from "./Dashboard Components/dashboard";
 export default function DashboardPage() {
   const {role,user} = useSelector((state)=>state.authUser);
   const Location = useLocation();
@@ -31,7 +32,7 @@ export default function DashboardPage() {
         <section className="w-full pt-2 md:p-0">
           {Location.pathname !== '/dashboard' ?
           <Outlet /> :
-          <h1>Dashboard</h1>
+          <Dashboard />
           }
         </section>
       </div>

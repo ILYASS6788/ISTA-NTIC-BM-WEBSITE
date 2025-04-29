@@ -3,8 +3,7 @@ import {
   Calendar,
   BookOpen,
   Clock,
-  Settings,
-  CircleUserRoundIcon,
+  LayoutDashboardIcon,
   LucideArrowUpRightFromCircle,
 } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -91,10 +90,12 @@ export default function SidebarDashboard({ user }) {
 </div>
 
 
-        <div className="flex items-center space-x-2 text-white mb-4 pb-3 border-b-2 border-amber-50">
-          <Settings className="h-6 w-6" />
-          <span className=" text-lg font-semibold">Admin Dashboard</span>
-        </div>
+        <button
+        onClick={()=>{location.pathname !== "/dashboard" ? Navigate(-1) : null}}
+         className="cursor-pointer flex items-center space-x-2 text-white mb-4 pb-3 border-b-2 border-amber-50">
+          <LayoutDashboardIcon className="h-6 w-6" />
+          <span className=" text-lg font-semibold">Tableau de bord</span>
+        </button>
         <nav className="space-y-2 flex justify-center items-center flex-col">
           <SidebarButton
             to="events"
