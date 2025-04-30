@@ -19,6 +19,7 @@ import Apropos from "../components/Apropos";
 import EventDetails from "../pages/EventDetails";
 import AddSchedulePage from "../pages/Dashboard Components/addSchedule";
 import AddEventPage from "../pages/Dashboard Components/AddEvent";
+import UpdateEvent from "../pages/Dashboard Components/UpdateEvent";
 
 
 const router = createBrowserRouter([
@@ -68,6 +69,10 @@ const router = createBrowserRouter([
             element: <AddEventPage />
           },
           {
+            path: "modifier-event/:id",
+            element: <UpdateEvent />
+          },
+          {
             path: "schedule",
             element: <ShedulesDashboard/>
           },
@@ -92,6 +97,7 @@ const router = createBrowserRouter([
       element: <Entrer />, // Entrer is the container/layout
       children: [
         {
+          index:true,
           path: "join-us", // Relative path inside Entrer
           element: <Login />, // Renders Login page inside Entrer
         },

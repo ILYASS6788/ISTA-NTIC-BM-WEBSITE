@@ -6,6 +6,7 @@ import { CheckCircleIcon, MessageCircleWarningIcon, X } from "lucide-react";
 import { motion } from 'framer-motion';
 import { hideNotify } from "../sotre/slices/NotificationToast";
 import { useEffect } from "react";
+import Dashboard from "./Dashboard Components/dashboard";
 export default function DashboardPage() {
   const {role,user} = useSelector((state)=>state.authUser);
   const Location = useLocation();
@@ -20,7 +21,7 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="bg-gray-50 h-fit"
+    <div className="bg-gray-50"
     >
       
       <div className="flex items-stretch">
@@ -31,7 +32,7 @@ export default function DashboardPage() {
         <section className="w-full pt-2 md:p-0">
           {Location.pathname !== '/dashboard' ?
           <Outlet /> :
-          <h1>Dashboard</h1>
+          <Dashboard />
           }
         </section>
       </div>
@@ -56,36 +57,36 @@ export default function DashboardPage() {
   })
   
   return (
-    <div className="flex flex-col gap-2 w-fit text-[10px] sm:text-xs z-50 absolute bottom-5 right-2">
-        <motion.div
-          className={`succsess-alert cursor-default border-2 flex items-center justify-between w-full h-12 sm:h-14 rounded-lg bg-white shadow-2xl
-             ${success ? 'shadow-cyan-300' : 'shadow-red-300 border-red-400'} px-[10px]`}
-          initial={{ x: -200, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          exit={{ delay:0.8,x: -200, opacity: 0 }}
-          transition={{ type: "spring", stiffness: 100, damping: 15 }}
-        >
-          <div className="flex gap-2">
-            <div className={`${success ? 'text-[#2b9875]' : 'text-red-600'} bg-white/5 backdrop-blur-xl p-1 rounded-lg`}>
-              { 
-                success ? 
-                <CheckCircleIcon size={20} />
-                 :
-                <MessageCircleWarningIcon size={20} />
-              }
-            </div>
-            <div>
-              <p className={`${success ? 'text-green-500' : 'text-red-600'}`}>{title}</p>
-              <p className="text-gray-500">{message}</p>
-            </div>
-          </div>
-          <button
-           onClick={hide}
-            className="cursor-pointer text-gray-600 hover:bg-gray-300 p-1 rounded-md transition-colors ease-linear"
-          >
-           <X size={18} />
-          </button>
-        </motion.div>
-    </div>
+    <div className="flex flex-col gap-4 w-fit text-xs sm:text-sm z-50 fixed bottom-6 right-4">
+    <motion.div
+      className={`succsess-alert cursor-default flex items-center justify-between w-full min-w-[260px] sm:min-w-[300px] h-14 sm:h-16 rounded-xl bg-white shadow-sm border
+        ${success ? 'shadow-green-400 border-green-400' : 'shadow-red-400 border-red-400'} px-4`}
+      initial={{ scale: 0.8, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      exit={{ scale: 0.8, opacity: 0 }}
+      transition={{ type: "spring", stiffness: 120, damping: 12 }}
+    >
+      <div className="flex gap-3 items-center">
+        <div className={`${success ? 'text-green-500' : 'text-red-500'} bg-white/10 backdrop-blur-lg p-2 rounded-full`}>
+          {success ? (
+            <CheckCircleIcon size={24} />
+          ) : (
+            <MessageCircleWarningIcon size={24} />
+          )}
+        </div>
+        <div className="flex flex-col">
+          <p className={`font-semibold ${success ? 'text-green-600' : 'text-red-600'}`}>{title}</p>
+          <p className="text-gray-600 text-[11px] sm:text-xs">{message}</p>
+        </div>
+      </div>
+      <button
+        onClick={hide}
+        className="cursor-pointer text-gray-500 hover:bg-gray-200 p-2 rounded-full transition"
+      >
+        <X size={18} />
+      </button>
+    </motion.div>
+  </div>
+  
   );
 }
