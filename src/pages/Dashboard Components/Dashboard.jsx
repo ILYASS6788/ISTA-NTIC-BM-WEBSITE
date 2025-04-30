@@ -113,13 +113,14 @@ const Dashboard = () => {
                     <Clock className="w-4 h-4" />
                     <span>{event.time}</span>
                     <MapPin className="w-4 h-4 ml-4" />
-                    <span>{event.location}</span>
+                    <span>{event.location }</span>
                   </div>
                 </li>
               ))}
             </ul>
           )}
         </div>
+
 
         <div className="bg-white shadow rounded-xl p-6 flex items-center space-x-4 hover:shadow-md transition">
           <div className="bg-indigo-100 text-indigo-600 p-3 rounded-full">
